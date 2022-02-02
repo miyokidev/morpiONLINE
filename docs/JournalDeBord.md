@@ -10,3 +10,7 @@ Une application web et de bureau qui permet de jouer au morpion avec ses amis.
 * Rendu du cahier des charges
 
 ### 02.02.2022
+* Création du planning de Gantt prévisionnel
+* Ajout du modèle conceptuel dans le cahier des charges
+* Finalisation du cahier des charges
+* Rendu du planning de Gantt prévisionnel
