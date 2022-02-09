@@ -16,3 +16,8 @@ Une application web et de bureau qui permet de jouer au morpion avec ses amis.
 * Rendu du planning de Gantt prévisionnel
 
 ### 09.02.2022
+* Réalisation de la maquette utilisateur
+* Modélisation de la base de données
+* Commencement du développement de l'API
+* Commencement du développement du client web
+* Commencement du développement du client C#
