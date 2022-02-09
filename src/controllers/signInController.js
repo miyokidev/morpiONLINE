@@ -6,7 +6,7 @@ const argon2 = require('argon2');
 const crypto = require('crypto');
 
 router.post('/', (req, res) => {
-    let email = req.body.email//.trim().toLowerCase();
+    let username = req.body.username;
     let password = req.body.password;
 
     let message = [];
@@ -15,24 +15,18 @@ router.post('/', (req, res) => {
         message.push("Le mot de passe doit faire minimum 8 caractères, ne doit pas contenir d'espace et doit contenir des lettres.")
     }
 
-    if (!checkEmail(email)) {
-        message.push("L'adresse email que vous avez saisit est incorrect.")
-    }
-
     if (message.length == 0) {
-        // Génère une chaine de caractères de 40 caractères
-        let token = crypto.randomBytes(20).toString('hex')
-        let myUser = new User(email, password, token)
+        let myUser = new User();
+        myUser.setUsername(username);
+        myUser.setPassword(password);
 
         myUser.signIn().then(async (response) => {
             if (response.length != 0) {
-                if (response[0].email == myUser.getEmail() && await argon2.verify(response[0].password, myUser.getPassword())) {
+                if (response[0].username == myUser.getUsername() && await argon2.verify(response[0].password, myUser.getPassword())) {
                     myUser.setIdUser(response[0].idUser);
-                    myUser.changeToken()
                     res.status(200).json({
                         result: true,
                         message: "Connexion réussie !",
-                        token: myUser.getToken()
                     })
                 }
                 else {

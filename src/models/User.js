@@ -26,25 +26,24 @@ class User {
         this.password = password;
     }
 
-    /*
     async signUp() {
-        let sql = "INSERT INTO users (email, password, token) VALUES (?, ?, ?)"
-        Db.execute(sql, [this.getEmail(), this.getPassword(), this.getToken()], function (err) {
+        let sql = "INSERT INTO users (username, password) VALUES (?, ?)"
+        Db.execute(sql, [this.getUsername(), this.getPassword()], function (err) {
             if (err) throw err;
         })
     }
 
-    async findByEmail() {
-        let sql = "SELECT count(email) AS email FROM users WHERE email = ?"
-        const [rows, fields] = await Db.execute(sql, [this.getEmail()]);
+    async findByUsername() {
+        let sql = "SELECT count(username) AS username FROM users WHERE username = ?"
+        const [rows, fields] = await Db.execute(sql, [this.getUsername()]);
         return rows;
     }
 
     async signIn() {
-        let sql = "SELECT * FROM users WHERE email = ?"
-        const [rows, fields] = await Db.execute(sql, [this.getEmail()]);
+        let sql = "SELECT * FROM users WHERE username = ?"
+        const [rows, fields] = await Db.execute(sql, [this.getUsername()]);
         return rows;
     }
-    */
+
 }
-module.exports = User;
+module.exports = User; 
