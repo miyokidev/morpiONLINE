@@ -1,0 +1,21 @@
+{
+  "name": "morpionline",
+  "version": "1.0.0",
+  "description": "A web client for morpiONLINE",
+  "main": "index.js",
+  "scripts": {},
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/miyokidev/morpiONLINE.git"
+  },
+  "author": "HUGO.BVLLR",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/miyokidev/morpiONLINE/issues"
+  },
+  "homepage": "https://github.com/miyokidev/morpiONLINE#readme",
+  "dependencies": {
+    "bootstrap": "^5.1.3",
+    "socket.io": "^4.4.1"
+  }
+}
