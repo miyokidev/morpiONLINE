@@ -10,50 +10,48 @@
 <body class="d-flex flex-column h-100">
 
     <!-- Header -->
-    <div class="container">
-        <header class="d-flex flex-wrap justify-content-center py-3 mb-4 border-bottom">
-          <div class="d-flex align-items-center mb-3 mb-md-0 me-md-auto text-dark text-decoration-none">
-            <span class="fs-4">morpiONLINE</span>
-          </div>
-        </header>
-      </div>
+    <header>
+      <nav class="navbar navbar-expand-lg navbar-light p-3 px-md-4 bg-white border-bottom shadow-sm">
+        <div class="container-fluid">
+          <a class="navbar-brand" href="index.html">morpiONLINE</a>
+        </div>
+      </nav>
+    </header>
 
-  <!--Section -->
-  <div class="modal modal-tour position-static d-block bg-secondary py-5" role="dialog" id="modalTour">
+  <!-- Section -->
+  <div class="modal modal-tour position-static d-block bg-secondary py-5 d-flex justify-content-center" role="dialog" id="modalTour">
     <div class="modal-dialog" role="document">
       <div class="modal-content rounded-6 shadow">
         <div class="modal-body p-5">
           <h2 class="fw-bold mb-0">Rejoindre un salon</h2>
   
           <ul class="d-grid gap-4 my-5 list-unstyled">
-            <li class="d-flex gap-4">
+            <li class="d-flex gap-4 justify-content-end">
               <div>
-                <h5 class="mb-0">Grid view</h5>
-                Not into lists? Try the new grid view.
+                <input class="form-control form-control-lg" type="text" placeholder="Code" aria-label="default input example">
               </div>
             </li>
             <li class="d-flex gap-4">
               <div>
-                <h5 class="mb-0">Bookmarks</h5>
-                Save items you love for easy access later.
               </div>
             </li>
-            <li class="d-flex gap-4">
+            <li class="d-flex gap-4 justify-content-end">
               <div>
-                <h5 class="mb-0">Video embeds</h5>
-                Share videos wherever you go.
+                <button type="button" class="btn btn-dark">Rejoindre</button>
               </div>
             </li>
           </ul>
+          <hr class="my-4">
           <button type="button" class="btn btn-lg text-white bg-dark mt-5 w-100" data-bs-dismiss="modal">Créer un salon</button>
         </div>
       </div>
     </div>
   </div>
 
-  <footer class="footer mt-auto py-3 bg-light">
+  <!-- Footer -->
+  <footer class="footer mt-auto py-3 bg-light d-flex justify-content-end">
     <div class="container">
-      <span class="text-muted">Place sticky footer content here.</span>
+      <span class="text-muted">morpiONLINE 2022-2023 &copy; Copyright</span>
     </div>
   </footer>
   

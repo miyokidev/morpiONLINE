@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="fr" class="h-100">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="css/style.css" rel="stylesheet">
+    <title>Salon</title>
+</head>
+<body class="d-flex flex-column h-100">
+    <!-- Header -->
+    <header>
+        <nav class="navbar navbar-expand-lg navbar-light p-3 px-md-4 bg-white border-bottom shadow-sm">
+            <div class="container-fluid">
+                <a class="navbar-brand" href="index.html">morpiONLINE</a>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Section -->
+    <div class="modal modal-tour position-static d-block bg-secondary py-5 d-flex justify-content-center" role="dialog"
+        id="modalTour">
+        <div class="d-flex flex-row flex-wrap p-2 bd-highlight justify-content-center">
+            <div class="m-4" role="document">
+                <div class="modal-content rounded-6 shadow">
+                    <div class="modal-body p-5">
+                        <h2 class="fw-bold mb-0 text-center">En attente d'un joueur</h2>
+                        <hr class="my-4">
+    
+                        <ul class="d-grid gap-4 my-5 list-unstyled">
+                            <li class="d-flex gap-4">
+                                <div>
+                                    <span class="fs-4">Liste des joueurs : </span>
+                                </div>
+                            </li>
+                            <li class="d-flex gap-4 justify-content-center">
+                                <div>
+                                    <span class="fs-5">Votre pseudo </span>
+                                </div>
+                            </li>
+                            <li class="d-flex gap-4 justify-content-center">
+                                <div>
+                                    <span class="fs-5">...</span>
+                                </div>
+                            </li>
+                            <li class="d-flex gap-4">
+                                <div>
+    
+                                </div>
+                            </li>
+                            <li class="d-flex gap-4 justify-content-center">
+                                <div>
+                                    <button type="button" class="btn btn-lg text-white bg-dark mt-5 w-100" data-bs-dismiss="modal">Lancer la partie</button>
+                                </div>
+                            </li>
+                            <li class="d-flex gap-2">
+                                <div>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer mt-auto py-3 bg-light d-flex justify-content-end">
+        <div class="container">
+            <span class="text-muted">morpiONLINE 2022-2023 &copy; Copyright</span>
+        </div>
+    </footer>
+    <script src="/node_modules/bootstrap/dist/js/bootstrap.min.js"></script>
+</body>
+</html>
