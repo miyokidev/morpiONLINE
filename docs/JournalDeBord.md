@@ -21,3 +21,7 @@ Une application web et de bureau qui permet de jouer au morpion avec ses amis.
 * Commencement du développement de l'API
 * Commencement du développement du client web
 * Commencement du développement du client C#
+
+### 23.02.2022
+* Finalisation de la page d'accueil, du formulaire et du salon du client web
+* Avancement du développement de l'API
