@@ -25,3 +25,8 @@ Une application web et de bureau qui permet de jouer au morpion avec ses amis.
 ### 23.02.2022
 * Finalisation de la page d'accueil, du formulaire et du salon du client web
 * Avancement du développement de l'API
+
+### 02.03.2022
+* Finalisation de l'interface graphique en C#
+* Finalisation de l'inscription et connexion en C# et coté NodeJS
+* Avancement de la page jeu du client web
