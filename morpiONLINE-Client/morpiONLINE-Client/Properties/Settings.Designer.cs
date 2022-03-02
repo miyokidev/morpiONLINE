@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace morpiONLINE_Client.Properties
+namespace morpiONLINE_client.Properties
 {
 
 

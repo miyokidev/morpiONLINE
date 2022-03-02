@@ -4,7 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace morpiONLINE_Client
+namespace morpiONLINE_client
 {
     internal static class Program
     {
@@ -16,7 +16,7 @@ namespace morpiONLINE_Client
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new Form1());
+            Application.Run(new frmConnection());
         }
     }
 }

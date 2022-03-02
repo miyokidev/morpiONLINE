@@ -5,11 +5,11 @@ using System.Runtime.InteropServices;
 // Les informations générales relatives à un assembly dépendent de
 // l'ensemble d'attributs suivant. Changez les valeurs de ces attributs pour modifier les informations
 // associées à un assembly.
-[assembly: AssemblyTitle("morpiONLINE-Client")]
+[assembly: AssemblyTitle("morpiONLINE-client")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct("morpiONLINE-Client")]
+[assembly: AssemblyProduct("morpiONLINE-client")]
 [assembly: AssemblyCopyright("Copyright ©  2022")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
@@ -20,7 +20,7 @@ using System.Runtime.InteropServices;
 [assembly: ComVisible(false)]
 
 // Le GUID suivant est pour l'ID de la typelib si ce projet est exposé à COM
-[assembly: Guid("a0f492b5-95b5-45d4-811e-cbdb4a0d3ed1")]
+[assembly: Guid("00dc7278-34c5-4c06-88b8-8d9d80833d3c")]
 
 // Les informations de version pour un assembly se composent des quatre valeurs suivantes :
 //
