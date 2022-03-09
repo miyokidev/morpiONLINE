@@ -1,12 +1,14 @@
 const express = require('express');
+const dotenv = require('dotenv').config();
 const signIn = require('./controllers/signInController.js');
 const signUp = require('./controllers/signUpController.js');
+const { generateRandomId, handlePlayerLeave } = require('./function.js');
 
 const app = express();
-const port = 6969;
+const port = process.env.PORT;
 
 const socketApp = express();
-const socketPort = 3000;
+const socketPort = process.env.SOCKET_PORT;
 
 app.use(function (req, res, next) {
     res.setHeader('Access-Control-Allow-Origin', '*')
@@ -32,23 +34,50 @@ var io = require('socket.io')(server, {
     }
 });
 
-// a new client is connected
+let rooms = [];
+
 io.on('connection', (socket) => {
 
     console.log('Connected: ' + socket.id);
 
     socket.on('disconnect', () => {
+        handlePlayerLeave(socket);
         console.log('Disconnected: ' + socket.id);
     });
 
-    socket.on('hello', event => {
-        socket.broadcast.emit('hello', event);
+    socket.on('createRoom', event => {
+        const room = {
+            id: generateRandomId(),
+            players: [socket.id],
+        };
+
+        rooms.push(room);
+        socket.join(room.id);
     });
 
-    socket.on('message', event => {
-        io.emit('message', event);
+    socket.on('joinRoom', event => {
+        for (let i = 0; i < rooms.length; i++) {
+            let currentRoom = rooms[i];
+            if (currentRoom.id == event.id) {
+                if (currentRoom.players.length < 2) {
+                    currentRoom.players.push(socket.id);
+                    socket.join(currentRoom.id);
+                } else {
+                    socket.emit('exception', {errorMessage: `Le salon est plein`});
+                }
+            } else {
+                socket.emit('exception', {errorMessage: `Aucun salon n'a été trouvé avec le code renseigné`});
+            }
+        }
     });
 
+    socket.on('leaveRoom', () => {
+        handlePlayerLeave(socket);
+    });
+
+    socket.on('showPublicRooms', () => {
+        
+    });
 });
 
 server.listen(socketPort, () => {

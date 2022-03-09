@@ -1,9 +1,10 @@
 const express = require('express');
 const router = express.Router();
-const { checkPassword } = require('../function.js');
+const { checkPassword, checkUsername } = require('../function.js');
 const User = require('../models/User.js');
 const argon2 = require('argon2');
 const crypto = require('crypto');
+const dotenv = require('dotenv').config();
 
 router.post('/', (req, res) => {
     let username = req.body.username;
@@ -11,8 +12,12 @@ router.post('/', (req, res) => {
 
     let message = [];
 
+    if (!checkUsername(username)) {
+        message.push("Le nom d'utilisateur que vous avez saisi est incorrect.")
+    }
+
     if (!checkPassword(password)) {
-        message.push("Le mot de passe doit faire minimum 8 caractères, ne doit pas contenir d'espace et doit contenir des lettres.")
+        message.push("Le mot de passe que vous avez saisi est incorrect.")
     }
 
     if (message.length == 0) {
@@ -27,10 +32,11 @@ router.post('/', (req, res) => {
                     res.status(200).json({
                         result: true,
                         message: "Connexion réussie !",
+                        socketPort: process.env.SOCKET_PORT,
                     })
                 }
                 else {
-                    message.push("Le mot de passe que vous avez saisit est incorrect.")
+                    message.push("Le mot de passe que vous avez saisi est incorrect.")
                     res.status(400).json({
                         result: false,
                         message: message
@@ -38,7 +44,7 @@ router.post('/', (req, res) => {
                 }
             }
             else {
-                message.push("L'adresse email que vous avez saisit n'est pas enregistré.")
+                message.push("Le nom d'utilisateur que vous avez saisi n'est pas enregistré.")
                 res.status(400).json({
                     result: false,
                     message: message

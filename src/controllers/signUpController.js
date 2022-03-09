@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const { checkPassword } = require('../function.js');
+const { checkPassword, checkUsername } = require('../function.js');
 const User = require('../models/User.js');
 const argon2 = require('argon2');
 const crypto = require('crypto');
@@ -10,6 +10,10 @@ router.post('/', async (req, res) => {
     let password = req.body.password;
 
     let message = [];
+
+    if (!checkUsername(username)) {
+        message.push("Le nom d'utilisateur doit faire maximum 8 caractères et ne doit pas contenir d'espace.")
+    }
 
     if (!checkPassword(password)) {
         message.push("Le mot de passe doit faire minimum 8 caractères, ne doit pas contenir d'espace et doit contenir des lettres.")
