@@ -17,8 +17,11 @@ namespace morpiONLINE_client
 {
     public partial class frmConnection : Form
     {
-        const string API = "http://10.5.47.37:6969/";
-        
+        // Serveur de Brian http://10.5.47.37:6969/
+        // Serveur de Leo http://10.5.47.32:6969/
+
+        const string API = "http://10.5.47.32:6969/";
+
         public frmConnection()
         {
             InitializeComponent();
@@ -36,7 +39,7 @@ namespace morpiONLINE_client
 
         private void btnInscription_Click(object sender, EventArgs e)
         {
-            
+
             // Inscription
             string user = tbxNewUser.Text;
             string password = tbxNewPassword.Text;
@@ -120,6 +123,7 @@ namespace morpiONLINE_client
             {
                 using (WebResponse response = error.Response)
                 {
+                    // Affichage du message d'erreur
                     HttpWebResponse httpResponse = (HttpWebResponse)response;
                     Console.WriteLine("Error code: {0}", httpResponse.StatusCode);
                     using (Stream data = response.GetResponseStream())
@@ -136,7 +140,7 @@ namespace morpiONLINE_client
             }
         }
 
-        // Socket IO
+        // Socket IO - Communication avec le serveur
         public void socketIOManager()
         {
             var socket = IO.Socket(API);
