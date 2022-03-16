@@ -11,9 +11,12 @@
 <body class="d-flex flex-column h-100">
     <!-- Header -->
     <header>
-        <nav class="navbar navbar-expand-lg navbar-light p-3 px-md-4 bg-white border-bottom shadow-sm">
+        <nav class="navbar-expand-lg navbar-light p-3 bg-white border-bottom shadow-sm">
             <div class="container-fluid">
-                <a class="navbar-brand" href="index.html">morpiONLINE</a>
+
+        <img src="img/logo.png" alt="logo" width="50px" height="50px">
+
+                <a class="navbar-brand mx-3" href="index.html">morpiONLINE</a>
             </div>
         </nav>
     </header>
@@ -23,7 +26,7 @@
         id="modalTour">
         <div class="d-flex flex-row flex-wrap p-2 bd-highlight justify-content-center">
             <div class="m-4" role="document">
-                <div class="modal-content rounded-6 shadow">
+                <div class="modal-content rounded-6 shadow mb-5">
                     <div class="modal-body p-5">
                         <h2 class="fw-bold mb-0 text-center">Connexion</h2>
     
@@ -31,32 +34,24 @@
                             <li class="d-flex gap-4 justify-content-end">
                                 <div>
                                     <input class="form-control form-control-lg" type="text" placeholder="username"
-                                        aria-label="default input example">
+                                        aria-label="default input example" id="idUsernameLogin">
                                 </div>
                             </li>
                             <li class="d-flex gap-4 justify-content-end">
                                 <div>
                                     <input class="form-control form-control-lg" type="password" placeholder="passw0rd!"
-                                        aria-label="default input example">
+                                        aria-label="default input example" id="idPasswordLogin">
                                 </div>
                             </li>
                             <li class="d-flex gap-4 justify-content-end">
                                 <div>
     
-                                    <button type="button" class="btn btn-dark">Se connecter</button>
+                                    <button type="button" id="idBtnLogin" class="btn btn-dark">Se connecter</button>
                                 </div>
                             </li>
                             <li class="d-flex gap-4 justify-content-end">
-                                <div>
-    
-                                </div>
-                            </li>
-                            <li class="d-flex gap-4 justify-content-end">
-                                <div>
-                                </div>
-                            </li>
-                            <li class="d-flex gap-2 justify-content-end">
-                                <div>
+                                <div id="idMessageLogin" class="d-flex flex-column">
+                                    
                                 </div>
                             </li>
                         </ul>
@@ -73,24 +68,24 @@
                             <li class="d-flex gap-4 justify-content-end">
                                 <div>
                                     <input class="form-control form-control-lg" type="text" placeholder="username"
-                                        aria-label="default input example">
+                                        aria-label="default input example" id="idUsernameRegister">
                                 </div>
                             </li>
                             <li class="d-flex gap-4 justify-content-end">
                                 <div>
                                     <input class="form-control form-control-lg" type="password" placeholder="passw0rd!"
-                                        aria-label="default input example">
+                                        aria-label="default input example" id="idPasswordRegister">
                                 </div>
+                            </li>
                             </li>
                             <li class="d-flex gap-4 justify-content-end">
                                 <div>
-                                    <input class="form-control form-control-lg" type="password" placeholder="passw0rd!2"
-                                        aria-label="default input example">
+                                    <button type="button" id="idBtnRegister" class="btn btn-dark">S'inscrire</button>
                                 </div>
                             </li>
-                            <li class="d-flex gap-4 justify-content-end">
-                                <div>
-                                    <button type="button" class="btn btn-dark">S'inscrire</button>
+                            <li class="d-flex flex-wrap gap-4 justify-content-end">
+                                <div id="idMessageRegister" class="d-flex flex-column">
+                                    
                                 </div>
                             </li>
                         </ul>
@@ -107,5 +102,6 @@
         </div>
     </footer>
     <script src="/node_modules/bootstrap/dist/js/bootstrap.min.js"></script>
+    <script src="js/form.js"></script>
 </body>
 </html>
