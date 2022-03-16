@@ -30,3 +30,21 @@ Une application web et de bureau qui permet de jouer au morpion avec ses amis.
 * Finalisation de l'interface graphique en C#
 * Finalisation de l'inscription et connexion en C# et coté NodeJS
 * Avancement de la page jeu du client web
+
+### 09.03.2022
+* Commencement de la documentation technique
+* Ajout d'un logo pour le projet
+* Avancement du client C#
+
+
+### 16.03.2022
+* Finalisation du design du client WEB
+* Mise à jour de la documentation technique
+* Connexion avec l'API via le client WEB (Problème de connexion avec l'API)
+
+
+## Contributeurs
+* HUGO.BVLLR
+* LEO.MNTGN
+* BRIAN.GRN
+* HODHEIL.MLL
