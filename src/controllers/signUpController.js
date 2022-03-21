@@ -6,6 +6,7 @@ const argon2 = require('argon2');
 const crypto = require('crypto');
 
 router.post('/', async (req, res) => {
+    console.table(req);
     let username = req.body.username;
     let password = req.body.password;
 
