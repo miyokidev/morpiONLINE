@@ -54,7 +54,7 @@ function generateRandomId() {
     return result;
 }
 
-function handlePlayerLeave(player) {
+function handlePlayerLeave(player, rooms) {
     for (let i = 0; i < rooms.length; i++) {
         let currentRoom = rooms[i];
         if (currentRoom.players.include(player.id)) {
@@ -67,6 +67,7 @@ function handlePlayerLeave(player) {
             }
         }
     }
+    return rooms;
 }
 
 module.exports = { checkPassword, checkUsername, generateRandomId, handlePlayerLeave };

@@ -41,7 +41,7 @@ io.on('connection', (socket) => {
     console.log('Connected: ' + socket.id);
 
     socket.on('disconnect', () => {
-        handlePlayerLeave(socket);
+        rooms = handlePlayerLeave(socket, rooms);
         console.log('Disconnected: ' + socket.id);
     });
 
@@ -72,7 +72,7 @@ io.on('connection', (socket) => {
     });
 
     socket.on('leaveRoom', () => {
-        handlePlayerLeave(socket);
+        rooms = handlePlayerLeave(socket, rooms);
     });
 
     socket.on('showPublicRooms', () => {
