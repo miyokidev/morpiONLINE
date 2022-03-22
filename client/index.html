@@ -34,7 +34,7 @@
           <ul class="d-grid gap-4 my-5 list-unstyled">
             <li class="d-flex gap-4 justify-content-end">
               <div>
-                <input class="form-control form-control-lg" type="text" placeholder="Code"
+                <input id="idCode" class="form-control form-control-lg" type="text" placeholder="Code"
                   aria-label="default input example">
               </div>
             </li>
@@ -44,12 +44,12 @@
             </li>
             <li class="d-flex gap-4 justify-content-end">
               <div>
-                <button type="button" class="btn btn-dark">Rejoindre</button>
+                <button id="idBtnJoin" type="button" class="btn btn-dark">Rejoindre</button>
               </div>
             </li>
           </ul>
           <hr class="my-4">
-          <button type="button" class="btn btn-lg text-white bg-dark mt-5 w-100" data-bs-dismiss="modal">Créer un
+          <button id="idBtnCreate" type="button" class="btn btn-lg text-white bg-dark mt-5 w-100" data-bs-dismiss="modal">Créer un
             salon</button>
         </div>
       </div>
@@ -63,8 +63,9 @@
     </div>
   </footer>
 
-
   <script src="/node_modules/bootstrap/dist/js/bootstrap.min.js"></script>
+  <script src="/node_modules/socket.io/client-dist/socket.io.min.js"></script>
+  <script src="js/index.js"></script>
 </body>
 
 </html>

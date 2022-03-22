@@ -1,17 +1,23 @@
 let btnRegister = document.getElementById("idBtnRegister");
 let btnLogin = document.getElementById("idBtnLogin");
 
+const user = {};
+
+addEventListener("DOMContentLoaded", () => {
+    if(sessionStorage.getItem('username') != null) {
+        location.href = "index.html";
+    }
+});
+
 btnRegister.addEventListener("click", () => {
     let usernameRegister = document.getElementById("idUsernameRegister");
     let passwordRegister = document.getElementById("idPasswordRegister");
     let messageRegister = document.getElementById("idMessageRegister");
 
-    let user = {
-        username: usernameRegister.value,
-        password: passwordRegister.value,
-    }
+    user.username = usernameRegister.value;
+    user.password = passwordRegister.value;
 
-    sendData(display, "http://10.5.47.32:8080/signup", user, messageRegister);
+    sendData(display, "http://localhost:8080/signup", user, messageRegister);
 });
 
 btnLogin.addEventListener("click", () => {
@@ -19,12 +25,10 @@ btnLogin.addEventListener("click", () => {
     let passwordLogin = document.getElementById("idPasswordLogin");
     let messageLogin = document.getElementById("idMessageLogin");
 
-    let user = {
-        username: usernameLogin.value,
-        password: passwordLogin.value
-    }
+    user.username = usernameLogin.value;
+    user.password = passwordLogin.value;
 
-    sendData(display, "http://10.5.47.32:8080/signin", user, messageLogin);
+    sendData(display, "http://localhost:8080/signin", user, messageLogin);
 })
 
 async function sendData(successCallBack, link, obj, message) {
@@ -36,14 +40,19 @@ async function sendData(successCallBack, link, obj, message) {
 }
 
 function display(data, message) {
-    console.log(message);
-    if(data.result == true){
-        console.log("youpi");
+    message.innerHTML = "";
+    if (data.result == true) {
+        console.log(data);
+        sessionStorage.setItem('username', user.username);
+        message.innerHTML += "<p class=\"text-success text-left\" style=\"width: 15rem;\">" + data.message + "</p>";
+
+        setTimeout(() => {
+            location.href = "index.html";
+        }, 1000);
     }
-    else{
-        message.innerHTML = "";
+    else {
         data.message.forEach(element => {
-            message.innerHTML += "<p class=\"text-danger text-left\" style=\"width: 15rem;\">"+element+"</p>";
+            message.innerHTML += "<p class=\"text-danger text-left\" style=\"width: 15rem;\">" + element + "</p>";
         });
     }
 }
