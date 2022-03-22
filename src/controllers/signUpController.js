@@ -36,7 +36,7 @@ router.post('/', async (req, res) => {
                 })
             }
             else {
-                message.push("L'adresse mail est déjà associé à un compte.")
+                message.push("Le nom d'utilisateur est déjà associé à un compte.")
                 res.status(400).json({
                     result: false,
                     message: message
