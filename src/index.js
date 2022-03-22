@@ -48,11 +48,14 @@ io.on('connection', (socket) => {
     socket.on('createRoom', event => {
         const room = {
             id: generateRandomId(),
-            players: [socket.id],
+            players: [{id : socket.id, name: event.name}],
         };
 
         rooms.push(room);
         socket.join(room.id);
+        io.to(room.id).emit("id", {
+            id: room.id
+        });
     });
 
     socket.on('joinRoom', event => {
@@ -60,13 +63,17 @@ io.on('connection', (socket) => {
             let currentRoom = rooms[i];
             if (currentRoom.id == event.id) {
                 if (currentRoom.players.length < 2) {
-                    currentRoom.players.push(socket.id);
+                    currentRoom.players.push({id: socket.id, name: event.name});
                     socket.join(currentRoom.id);
+                    io.to(currentRoom.id).emit("playerList", {
+                        player1: currentRoom.players[0].name,
+                        player2: currentRoom.players[1].name
+                      });
                 } else {
-                    socket.emit('exception', {errorMessage: `Le salon est plein`});
+                    io.to(socket.id).emit('exception', {errorMessage: `Le salon est plein`});
                 }
             } else {
-                socket.emit('exception', {errorMessage: `Aucun salon n'a été trouvé avec le code renseigné`});
+                io.to(socket.id).emit('exception', {errorMessage: `Aucun salon n'a été trouvé avec le code renseigné`});
             }
         }
     });

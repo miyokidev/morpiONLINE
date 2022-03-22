@@ -56,18 +56,21 @@ function generateRandomId() {
 
 function handlePlayerLeave(player, rooms) {
     for (let i = 0; i < rooms.length; i++) {
-        let currentRoom = rooms[i];
-        if (currentRoom.players.include(player.id)) {
-            currentRoom.players = currentRoom.players.filter(e => e !== player.id); // Retire l'ID du joueur qui quitte la room.
-            player.leave(currentRoom.id);
-
-            // Si il n'y a plus un seul joueur dans le salon on retire l'objet room de la liste des rooms.
-            if (currentRoom.players.length == 0) {
-                rooms = rooms.filter(e => e !== currentRoom);
-            }
+      let currentRoom = rooms[i];
+      for (let j = 0; j < currentRoom.players.length; j++) {
+        if (currentRoom.players[j].id == player.id) {
+          // Retire le joueur qui quitte la room.
+          currentRoom.players = currentRoom.players.filter(e => e.id !== player.id);
+          player.leave(currentRoom.id);
+  
+          // Si il n'y a plus un seul joueur dans le salon on retire l'objet room de la liste des rooms.
+          if (currentRoom.players.length == 0) {
+            rooms = rooms.filter(e => e !== currentRoom);
+          }
         }
+      }
     }
     return rooms;
-}
+  }
 
 module.exports = { checkPassword, checkUsername, generateRandomId, handlePlayerLeave };
