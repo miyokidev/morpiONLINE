@@ -10,8 +10,6 @@ using System.Net;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using SocketIOClient;
-using Quobject.SocketIoClientDotNet.Client;
 
 namespace morpiONLINE_client
 {
@@ -20,7 +18,7 @@ namespace morpiONLINE_client
         // Serveur de Brian http://10.5.47.37:6969/
         // Serveur de Leo http://10.5.47.32:6969/
 
-        const string API = "http://10.5.47.32:6969/";
+        const string API = "http://10.5.47.43:6969/";
 
         public frmConnection()
         {
@@ -103,7 +101,7 @@ namespace morpiONLINE_client
                 switch (param)
                 {
                     case "signin":
-                        // Renvoie vers le menu principal
+                        // Redirection vers le menu principal
                         this.Hide();
                         frmMenu menu = new frmMenu();
                         menu.ShowDialog();
@@ -138,12 +136,6 @@ namespace morpiONLINE_client
                     }
                 }
             }
-        }
-
-        // Socket IO - Communication avec le serveur
-        public void socketIOManager()
-        {
-            var socket = IO.Socket(API);
-        }
+        }        
     }
 }
