@@ -12,7 +12,6 @@ using System.IO;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using System.Net.WebSockets;
-using Quobject.SocketIoClientDotNet.Client;
 using SocketIOClient;
 
 namespace morpiONLINE_client
@@ -57,7 +56,7 @@ namespace morpiONLINE_client
         {
             var client = new SocketIO("http://10.5.47.43:7000/");
 
-            Console.WriteLine("Waiting");
+            Console.WriteLine("Test");
 
             client.On("hi", response =>
             {
@@ -81,6 +80,6 @@ namespace morpiONLINE_client
             await client.ConnectAsync();
 
             Console.ReadLine();
-        }     
+        }
     }
 }
