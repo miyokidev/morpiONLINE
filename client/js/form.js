@@ -17,7 +17,7 @@ btnRegister.addEventListener("click", () => {
     user.username = usernameRegister.value;
     user.password = passwordRegister.value;
 
-    sendData(display, "http://localhost:8080/signup", user, messageRegister);
+    sendData(display, "http://10.5.47.43:6969/signup", user, messageRegister);
 });
 
 btnLogin.addEventListener("click", () => {
@@ -28,7 +28,7 @@ btnLogin.addEventListener("click", () => {
     user.username = usernameLogin.value;
     user.password = passwordLogin.value;
 
-    sendData(display, "http://localhost:8080/signin", user, messageLogin);
+    sendData(display, "http://10.5.47.43:6969/signin", user, messageLogin);
 })
 
 async function sendData(successCallBack, link, obj, message) {
@@ -42,10 +42,11 @@ async function sendData(successCallBack, link, obj, message) {
 function display(data, message) {
     message.innerHTML = "";
     if (data.result == true) {
-        console.log(data);
         sessionStorage.setItem('username', user.username);
+        sessionStorage.setItem('token', data.token);
         message.innerHTML += "<p class=\"text-success text-left\" style=\"width: 15rem;\">" + data.message + "</p>";
 
+        
         setTimeout(() => {
             location.href = "index.html";
         }, 1000);

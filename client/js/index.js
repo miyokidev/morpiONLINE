@@ -1,4 +1,6 @@
-const socket = io("ws://localhost:3000");
+const socket = io("ws://10.5.47.43:7000", {
+    auth :  {token: sessionStorage.getItem('token')}
+});
 
 addEventListener("DOMContentLoaded", () => {
     if (sessionStorage.getItem('username') == null) {
@@ -12,7 +14,6 @@ let code = document.getElementById("idCode");
 
 btnCreate.addEventListener("click", () => {
     socket.emit("createRoom", {
-        name: sessionStorage.getItem('username')
     });
     socket.on("id", event => {
         location.href = "room.html?code="+event.id;
@@ -21,7 +22,6 @@ btnCreate.addEventListener("click", () => {
 });
 
 btnJoin.addEventListener("click", () => {
-    console.log(code.value);
     socket.emit("joinRoom", {
         id: code.value,
         name: sessionStorage.getItem('username')

@@ -1,11 +1,3 @@
-const socket = io("ws://localhost:3000");
-let username1 = document.getElementById("idUsername1");
-
-addEventListener("DOMContentLoaded", () => {
-    if(sessionStorage.getItem('username') == null) {
-        location.href = "form.html";
-    }
-    else {
-        username1.textContent = sessionStorage.getItem('username');
-    }
+const socket = io("ws://10.5.47.43:7000", {
+    auth :  {token: sessionStorage.getItem('token')}
 });
