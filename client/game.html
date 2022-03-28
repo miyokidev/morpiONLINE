@@ -36,7 +36,7 @@
                                         <img src="img/croix.png" alt="Croix" width="50px">
                                     </div>
                                     <div class="p-2 bd-highlight align-self-center">
-                                        <p class="fw-bold">Votre pseudo</p>
+                                        <p id="idSymbolP1"></p>
                                     </div>
                                 </div>
                             </div>
@@ -47,7 +47,7 @@
                                         <img src="img/rond.png" alt="Rond" width="50px">
                                     </div>
                                     <div class="p-2 bd-highlight align-self-center">
-                                        <p>Pseudo adversaire</p>
+                                        <p id="idSymbolP2"></p>
                                     </div>
                                 </div>
                             </div>
@@ -55,27 +55,27 @@
                         <table class="table-responsive">
                             <tbody>
                                 <tr>
-                                    <td class="border-end border-bottom border-dark"><img class="img-fluid d-block"
+                                    <td class="border-end border-bottom border-dark"><img id="0;0" class="img-fluid d-block"
                                             src="img/blanc.png" alt="Blanc"></td>
-                                    <td class="border-end border-bottom border-dark"><img class="img-fluid d-block"
+                                    <td class="border-end border-bottom border-dark"><img id="0;1" class="img-fluid d-block"
                                             src="img/blanc.png" alt="Blanc"></td>
-                                    <td class="border-bottom border-dark"><img class="img-fluid" src="img/blanc.png"
+                                    <td class="border-bottom border-dark"><img id="0;2" class="img-fluid" src="img/blanc.png"
                                             alt="Blanc"></td>
                                 </tr>
                                 <tr>
-                                    <td class="border-end border-bottom border-dark"><img class="img-fluid"
+                                    <td class="border-end border-bottom border-dark"><img id="1;0" class="img-fluid"
                                             src="img/blanc.png" alt="Blanc"></td>
-                                    <td class="border-end border-bottom border-dark"><img class="img-fluid"
+                                    <td class="border-end border-bottom border-dark"><img id="1;1" class="img-fluid"
                                             src="img/blanc.png" alt="Blanc"></td>
-                                    <td class="border-bottom border-dark"><img class="img-fluid" src="img/blanc.png"
+                                    <td class="border-bottom border-dark"><img id="1;2" class="img-fluid" src="img/blanc.png"
                                             alt="Blanc"></td>
                                 </tr>
                                 <tr>
-                                    <td class="border-end border-dark"><img class="img-fluid" src="img/blanc.png"
+                                    <td class="border-end border-dark"><img id="2;0" class="img-fluid" src="img/blanc.png"
                                             alt="Blanc"></td>
-                                    <td class="border-end border-dark"><img class="img-fluid" src="img/blanc.png"
+                                    <td class="border-end border-dark"><img id="2;1" class="img-fluid" src="img/blanc.png"
                                             alt="Blanc"></td>
-                                    <td><img class="img-fluid" src="img/blanc.png" alt="Blanc"></td>
+                                    <td><img id="2;2" class="img-fluid" src="img/blanc.png" alt="Blanc"></td>
                                 </tr>
                             </tbody>
                         </table>
@@ -100,6 +100,7 @@
         </div>
     </footer>
     <script src="/node_modules/bootstrap/dist/js/bootstrap.min.js"></script>
+    <script src="/node_modules/socket.io/client-dist/socket.io.min.js"></script>
     <script src="js/game.js"></script>
 </body>
 

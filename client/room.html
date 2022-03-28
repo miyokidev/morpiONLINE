@@ -6,6 +6,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="css/style.css" rel="stylesheet">
+    <link rel="stylesheet" href="/node_modules/bootstrap-icons/font/bootstrap-icons.css">
     <title>Salon</title>
 </head>
 
@@ -31,9 +32,13 @@
                     <div class="modal-body p-5">
                         <h2 id="gameState" class="fw-bold mb-0 text-center"></h2>
                         <hr class="my-4">
-
                         <ul class="d-grid gap-4 my-5 list-unstyled">
-                            <li class="d-flex gap-4">
+                            <li class="d-flex gap-4 justify-content-center">
+                                <div>
+                                    <span class="fs-4">Code : </span><span id="idRoom" class="fs-5"></span>&nbsp;<button id="idBtnCopyCode" class="btn btn-dark bi bi-clipboard fs-6"></button>
+                                </div>
+                            </li>
+                            <li class="d-flex gap-4 justify-content-center">
                                 <div>
                                     <span class="fs-4">Liste des joueurs : </span>
                                 </div>
@@ -48,9 +53,9 @@
                                     <span class="fs-5">Joueur 2: </span><span id="idPlayer2" class="fs-5"></span>
                                 </div>
                             </li>
-                            <li class="d-flex gap-4">
-                                <div>
-
+                            <li class="d-flex gap-4 justify-content-center">
+                                <div id="idErrorMessage" class="d-flex flex-column">
+                
                                 </div>
                             </li>
                             <li class="d-flex gap-4 justify-content-center">
@@ -84,5 +89,4 @@
     <script src="/node_modules/socket.io/client-dist/socket.io.min.js"></script>
     <script src="js/room.js"></script>
 </body>
-
 </html>

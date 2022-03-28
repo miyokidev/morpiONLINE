@@ -17,7 +17,7 @@ btnRegister.addEventListener("click", () => {
     user.username = usernameRegister.value;
     user.password = passwordRegister.value;
 
-    sendData(display, "http://10.5.47.43:6969/signup", user, messageRegister);
+    sendData(display, "http://localhost:6969/signup", user, messageRegister);
 });
 
 btnLogin.addEventListener("click", () => {
@@ -28,7 +28,7 @@ btnLogin.addEventListener("click", () => {
     user.username = usernameLogin.value;
     user.password = passwordLogin.value;
 
-    sendData(display, "http://10.5.47.43:6969/signin", user, messageLogin);
+    sendData(display, "http://localhost:6969/signin", user, messageLogin);
 })
 
 async function sendData(successCallBack, link, obj, message) {

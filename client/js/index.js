@@ -1,4 +1,4 @@
-const socket = io("ws://10.5.47.43:7000", {
+const socket = io("ws://localhost:7000", {
     auth :  {token: sessionStorage.getItem('token')}
 });
 
@@ -30,6 +30,13 @@ btnJoin.addEventListener("click", () => {
     });
 });
 
-socket.on("exception", event => {
-    console.log(event.errorMessage);
+socket.on('exception', event => {
+    let messageError = document.getElementById("idErrorMessage");
+    messageError.innerHTML = `<p class="text-danger text-left">${event.errorMessage}</p>`;
+});
+
+// Se reconnecter quand le token expire (crash/reboot server)
+socket.on('expiredToken', () => {
+    sessionStorage.clear();
+    location.href = "index.html";
 });
