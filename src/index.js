@@ -1,8 +1,9 @@
+const e = require('cors');
 const express = require('express');
 const dotenv = require('dotenv').config();
 const signIn = require('./controllers/signInController.js');
 const signUp = require('./controllers/signUpController.js');
-const { generateRandomId, handlePlayerLeave, emitPlayerList } = require('./function.js');
+const { generateRandomId, handlePlayerLeave, emitPlayerList, isPlayerInARoom } = require('./function.js');
 const store = require('./store.js');
 
 /* API APP */
@@ -40,19 +41,27 @@ var io = require('socket.io')(server, {
 let rooms = [];
 
 io.on('connection', (socket) => {
-
-    console.log('Connected: ' + socket.id);
-
     // On vérifie si l'utilisateur nous renseigne un token existant dans la mémoire.
     if (store.get(socket.handshake.auth.token) != null) {
+        console.log('Connected: ' + socket.id);
         var token = socket.handshake.auth.token;
         // Refresh socket id of user by token
         var user = store.get(token);
         user.id = socket.id;
         store.set(token, user);
 
+        var roomPlayer = isPlayerInARoom(socket, rooms);
+
+        if (roomPlayer != null) {
+            socket.join(roomPlayer.id);
+            emitPlayerList(io, roomPlayer);
+        }
+
         socket.on('disconnect', () => {
-            rooms = handlePlayerLeave(io, socket, rooms);
+            var roomPlayer = isPlayerInARoom(socket, rooms);
+            if (roomPlayer != null) {
+                socket.leave(roomPlayer.id);
+            }
             console.log('Disconnected: ' + socket.id);
         });
     
@@ -73,12 +82,16 @@ io.on('connection', (socket) => {
         });
     
         socket.on('joinRoom', event => {
+            var token = socket.handshake.auth.token;
             for (let i = 0; i < rooms.length; i++) {
                 let currentRoom = rooms[i];
                 if (currentRoom.id == event.id) {
                     if (currentRoom.players.length < 2) {
-                        currentRoom.players.push({token: event.token, name: store.get(event.token).name});
+                        currentRoom.players.push({token: token, name: store.get(token).name});
                         socket.join(currentRoom.id);
+                        io.to(socket.id).emit('joinedRoom', {
+                            id: currentRoom.id
+                        });
                         emitPlayerList(io, currentRoom);
                     } else {
                         io.to(socket.id).emit('exception', {errorMessage: `Le salon est plein`});
