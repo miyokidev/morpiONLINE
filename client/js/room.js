@@ -51,6 +51,12 @@ socket.on('expiredToken', () => {
     location.href = "index.html";
 });
 
+// Quand on arrive plus à se connecter au serveur socket.io (arrêt du serveur)
+socket.on('connect_error', function() {
+    sessionStorage.clear();
+    location.href = "index.html";
+ });
+
 socket.on("exception", event => {
     let messageError = document.getElementById("idErrorMessage");
 

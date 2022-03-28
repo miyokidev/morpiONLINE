@@ -49,3 +49,9 @@ socket.on("exception", event => {
     //messageError.innerHTML = `<p class="text-danger text-left">${event.errorMessage}</p>`;
     console.log(event.errorMessage);
 });
+
+// Quand on arrive plus à se connecter au serveur socket.io (arrêt du serveur)
+socket.on('connect_error', function() {
+    sessionStorage.clear();
+    location.href = "index.html";
+ });
