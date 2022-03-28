@@ -5,6 +5,7 @@ const User = require('../models/User.js');
 const argon2 = require('argon2');
 const crypto = require('crypto');
 const dotenv = require('dotenv').config();
+const store = require('../store.js');
 
 router.post('/', (req, res) => {
     let username = req.body.username;
@@ -21,7 +22,10 @@ router.post('/', (req, res) => {
     }
 
     if (message.length == 0) {
+        // Génère une chaine de caractères de 40 caractères
+        let token = crypto.randomBytes(20).toString('hex')
         let myUser = new User();
+
         myUser.setUsername(username);
         myUser.setPassword(password);
 
@@ -32,8 +36,15 @@ router.post('/', (req, res) => {
                     res.status(200).json({
                         result: true,
                         message: "Connexion réussie !",
-                        socketPort: process.env.SOCKET_PORT,
+                        token: token
                     })
+
+                    const user = {
+                        id: null,
+                        name: myUser.getUsername()
+                    };
+
+                    store.set(token, user);
                 }
                 else {
                     message.push("Le mot de passe que vous avez saisi est incorrect.")
