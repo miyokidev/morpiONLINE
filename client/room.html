@@ -29,7 +29,7 @@
             <div class="m-4" role="document">
                 <div class="modal-content rounded-6 shadow">
                     <div class="modal-body p-5">
-                        <h2 class="fw-bold mb-0 text-center">En attente d'un joueur</h2>
+                        <h2 id="gameState" class="fw-bold mb-0 text-center"></h2>
                         <hr class="my-4">
 
                         <ul class="d-grid gap-4 my-5 list-unstyled">
@@ -40,12 +40,12 @@
                             </li>
                             <li class="d-flex gap-4 justify-content-center">
                                 <div>
-                                    <span id="idUsername1" class="fs-5">Votre pseudo </span>
+                                    <span class="fs-5">Joueur 1: </span><span id="idPlayer1" class="fs-5"></span>
                                 </div>
                             </li>
                             <li class="d-flex gap-4 justify-content-center">
                                 <div>
-                                    <span class="fs-5">...</span>
+                                    <span class="fs-5">Joueur 2: </span><span id="idPlayer2" class="fs-5"></span>
                                 </div>
                             </li>
                             <li class="d-flex gap-4">
@@ -55,8 +55,12 @@
                             </li>
                             <li class="d-flex gap-4 justify-content-center">
                                 <div>
-                                    <button type="button" class="btn btn-lg text-white bg-dark mt-5 w-100"
+                                    <button id="idBtnStart" type="button" class="btn btn-lg text-white bg-dark mt-5 w-100"
                                         data-bs-dismiss="modal">Lancer la partie</button>
+                                </div>
+                                <div>
+                                    <button id="idBtnLeave" type="button" class="btn btn-lg text-white bg-dark mt-5 w-100"
+                                        data-bs-dismiss="modal">Quitter la salle</button>
                                 </div>
                             </li>
                             <li class="d-flex gap-2">

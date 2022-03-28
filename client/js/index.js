@@ -13,29 +13,23 @@ let btnJoin = document.getElementById("idBtnJoin");
 let code = document.getElementById("idCode");
 
 btnCreate.addEventListener("click", () => {
-    socket.emit("createRoom", {
-    });
+    socket.emit("createRoom");
+
     socket.on("id", event => {
         location.href = "room.html?code="+event.id;
       });
-
 });
 
 btnJoin.addEventListener("click", () => {
     socket.emit("joinRoom", {
         id: code.value,
-        name: sessionStorage.getItem('username')
     });
     
+    socket.on('joinedRoom', event => {
+        location.href = "room.html?code="+event.id;
+    });
 });
 
-socket.on("connect", event => {
-    socket.on("playerList", event => {
-        console.log(event.player1);
-        console.log(event.player2);
-      });
-
-      socket.on("exception", event => {
-        console.log(event.errorMessage);
-      });
+socket.on("exception", event => {
+    console.log(event.errorMessage);
 });
