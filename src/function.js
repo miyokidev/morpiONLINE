@@ -102,7 +102,7 @@ function playCell(room, cellIndexes) {
 function isGameFinished(game, cellIndexes) {
     if (!game.grid.some(row => row.includes(null))) {
         game.inProgress = false;
-        game.result = "tied";
+        game.result = "draw";
         return true;
     }
 
