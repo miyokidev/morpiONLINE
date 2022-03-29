@@ -33,9 +33,10 @@ namespace morpiONLINE_client
             this.lblPlayers = new System.Windows.Forms.Label();
             this.lblPlayer1 = new System.Windows.Forms.Label();
             this.btnStart = new System.Windows.Forms.Button();
-            this.label1 = new System.Windows.Forms.Label();
+            this.lblPlayer2 = new System.Windows.Forms.Label();
             this.lblIdRoom = new System.Windows.Forms.Label();
             this.btnCopy = new System.Windows.Forms.Button();
+            this.btnLeave = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // lblWaitingLaunch
@@ -73,7 +74,7 @@ namespace morpiONLINE_client
             this.btnStart.BackColor = System.Drawing.Color.Black;
             this.btnStart.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
             this.btnStart.ForeColor = System.Drawing.Color.White;
-            this.btnStart.Location = new System.Drawing.Point(345, 327);
+            this.btnStart.Location = new System.Drawing.Point(278, 330);
             this.btnStart.Name = "btnStart";
             this.btnStart.Size = new System.Drawing.Size(109, 46);
             this.btnStart.TabIndex = 5;
@@ -81,15 +82,15 @@ namespace morpiONLINE_client
             this.btnStart.UseVisualStyleBackColor = false;
             this.btnStart.Click += new System.EventHandler(this.btnStart_Click);
             // 
-            // label1
+            // lblPlayer2
             // 
-            this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label1.Location = new System.Drawing.Point(11, 213);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(778, 25);
-            this.label1.TabIndex = 6;
-            this.label1.Text = "Adversaire";
-            this.label1.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.lblPlayer2.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblPlayer2.Location = new System.Drawing.Point(11, 213);
+            this.lblPlayer2.Name = "lblPlayer2";
+            this.lblPlayer2.Size = new System.Drawing.Size(778, 25);
+            this.lblPlayer2.TabIndex = 6;
+            this.lblPlayer2.Text = "Adversaire";
+            this.lblPlayer2.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // lblIdRoom
             // 
@@ -109,15 +110,30 @@ namespace morpiONLINE_client
             this.btnCopy.TabIndex = 8;
             this.btnCopy.Text = "Copier code";
             this.btnCopy.UseVisualStyleBackColor = true;
+            this.btnCopy.Click += new System.EventHandler(this.btnCopy_Click);
+            // 
+            // btnLeave
+            // 
+            this.btnLeave.BackColor = System.Drawing.Color.Black;
+            this.btnLeave.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
+            this.btnLeave.ForeColor = System.Drawing.Color.White;
+            this.btnLeave.Location = new System.Drawing.Point(412, 330);
+            this.btnLeave.Name = "btnLeave";
+            this.btnLeave.Size = new System.Drawing.Size(109, 46);
+            this.btnLeave.TabIndex = 9;
+            this.btnLeave.Text = "Quitter";
+            this.btnLeave.UseVisualStyleBackColor = false;
+            this.btnLeave.Click += new System.EventHandler(this.btnLeave_Click);
             // 
             // frmRoom
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 450);
+            this.Controls.Add(this.btnLeave);
             this.Controls.Add(this.btnCopy);
             this.Controls.Add(this.lblIdRoom);
-            this.Controls.Add(this.label1);
+            this.Controls.Add(this.lblPlayer2);
             this.Controls.Add(this.btnStart);
             this.Controls.Add(this.lblPlayer1);
             this.Controls.Add(this.lblPlayers);
@@ -136,8 +152,9 @@ namespace morpiONLINE_client
         private System.Windows.Forms.Label lblPlayers;
         private System.Windows.Forms.Label lblPlayer1;
         private System.Windows.Forms.Button btnStart;
-        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Label lblPlayer2;
         private System.Windows.Forms.Label lblIdRoom;
         private System.Windows.Forms.Button btnCopy;
+        private System.Windows.Forms.Button btnLeave;
     }
 }

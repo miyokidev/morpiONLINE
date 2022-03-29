@@ -47,18 +47,54 @@ namespace morpiONLINE_client
 
         private async void btnJoin_Click(object sender, EventArgs e)
         {
-            JObject o = new JObject();
-            o["id"] = tbxRoomCode.Text;
+            JObject room = new JObject();
+            room["id"] = tbxRoomCode.Text;
 
-            await client.EmitAsync("joinRoom", o);
+            await client.EmitAsync("joinRoom", new { id = tbxRoomCode.Text });
 
-            /*
-            // Rejoindre un salon
-            this.Hide();
-            frmRoom salon = new frmRoom();
-            salon.ShowDialog();
-            this.Close();
-            */
+            string id = "";
+            bool isFinished = false;
+            bool error = false;
+            string errorMsg = "";
+
+            client.On("joinedRoom", response =>
+            {
+                string json = response.GetValue().GetRawText();
+                var game = JsonConvert.DeserializeObject<dynamic>(json);
+
+                id = game["id"];
+
+                isFinished = true;
+            });
+
+            client.On("exception", response =>
+            {
+                string json = response.GetValue().GetRawText();
+                var msg = JsonConvert.DeserializeObject<dynamic>(json);
+
+                error = true;
+                errorMsg = msg["errorMessage"];
+
+                isFinished = true;
+            });
+
+            while (!isFinished)
+            {
+                // Attente
+            }
+
+            if (error)
+            {
+                lblError.Visible = true;
+                lblError.Text = errorMsg;
+            } else
+            {
+                // Rejoindre un salon
+                this.Hide();
+                frmRoom salon = new frmRoom(user, id);
+                salon.ShowDialog();
+                this.Close();
+            }            
         }
 
         private async void btnCreate_Click(object sender, EventArgs e)
@@ -66,6 +102,7 @@ namespace morpiONLINE_client
             await client.EmitAsync("createRoom");
 
             string id = "";
+            bool isFinished = false;
 
             client.On("id", response =>
             {
@@ -74,23 +111,19 @@ namespace morpiONLINE_client
 
                 id = room["id"];
 
-                // Console.WriteLine(id);
-
-                this.Hide(); // Utliser HideForm() ? (Ne fonctionne pas)
-                frmRoom salon = new frmRoom(user, id);
-                salon.ShowDialog();
-                this.Close(); // Utiliser CloseForm() ? (Fonctionne)
+                isFinished = true;
             });
-
-            // Créer un salon
-            /* Cette strat pue sent le caca mais fonctionne
-            while (id == "")
+            
+            while (!isFinished)
             {
-                Console.WriteLine("caca");
+                // Attente
             }
 
-            Lancer la nouvelle forme ici
-            */            
+            // Créer un salon
+            this.Hide(); // Utliser HideForm() ? (Ne fonctionne pas)
+            frmRoom salon = new frmRoom(user, id);
+            salon.ShowDialog();
+            this.Close(); // Utiliser CloseForm() ? (Fonctionne)         
 
         }
 

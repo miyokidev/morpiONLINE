@@ -35,6 +35,7 @@
             this.lblCreate = new System.Windows.Forms.Label();
             this.grbHome = new System.Windows.Forms.GroupBox();
             this.lblRoomCode = new System.Windows.Forms.Label();
+            this.lblError = new System.Windows.Forms.Label();
             this.grbHome.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -53,7 +54,7 @@
             this.tbxRoomCode.BackColor = System.Drawing.Color.Silver;
             this.tbxRoomCode.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.tbxRoomCode.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.tbxRoomCode.Location = new System.Drawing.Point(43, 93);
+            this.tbxRoomCode.Location = new System.Drawing.Point(43, 108);
             this.tbxRoomCode.Name = "tbxRoomCode";
             this.tbxRoomCode.Size = new System.Drawing.Size(138, 26);
             this.tbxRoomCode.TabIndex = 1;
@@ -76,7 +77,7 @@
             this.btnJoin.BackColor = System.Drawing.Color.Black;
             this.btnJoin.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
             this.btnJoin.ForeColor = System.Drawing.Color.White;
-            this.btnJoin.Location = new System.Drawing.Point(95, 137);
+            this.btnJoin.Location = new System.Drawing.Point(95, 152);
             this.btnJoin.Name = "btnJoin";
             this.btnJoin.Size = new System.Drawing.Size(86, 26);
             this.btnJoin.TabIndex = 4;
@@ -112,17 +113,29 @@
             // 
             this.lblRoomCode.AutoSize = true;
             this.lblRoomCode.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblRoomCode.Location = new System.Drawing.Point(40, 75);
+            this.lblRoomCode.Location = new System.Drawing.Point(40, 90);
             this.lblRoomCode.Name = "lblRoomCode";
             this.lblRoomCode.Size = new System.Drawing.Size(86, 15);
             this.lblRoomCode.TabIndex = 9;
             this.lblRoomCode.Text = "Code du salon";
+            // 
+            // lblError
+            // 
+            this.lblError.ForeColor = System.Drawing.Color.Red;
+            this.lblError.Location = new System.Drawing.Point(12, 59);
+            this.lblError.Name = "lblError";
+            this.lblError.Size = new System.Drawing.Size(860, 23);
+            this.lblError.TabIndex = 10;
+            this.lblError.Text = "Message d\'erreur";
+            this.lblError.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.lblError.Visible = false;
             // 
             // frmMenu
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(884, 561);
+            this.Controls.Add(this.lblError);
             this.Controls.Add(this.grbHome);
             this.Name = "frmMenu";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
@@ -143,6 +156,7 @@
         private System.Windows.Forms.Label lblCreate;
         private System.Windows.Forms.GroupBox grbHome;
         private System.Windows.Forms.Label lblRoomCode;
+        private System.Windows.Forms.Label lblError;
     }
 }
 

@@ -29,6 +29,7 @@ namespace morpiONLINE_client
             Console.WriteLine("Code du salon : " + id);
 
             lblIdRoom.Text = idRoom;
+            lblPlayer1.Text = user.Username;
         }
 
         private void btnStart_Click(object sender, EventArgs e)
@@ -62,6 +63,22 @@ namespace morpiONLINE_client
         private async void frmRoom_Load(object sender, EventArgs e)
         {
             await SocketManager();
+        }
+
+        private void btnLeave_Click(object sender, EventArgs e)
+        {
+            // Retour au menu
+            this.Hide();
+            frmMenu partie = new frmMenu(user);
+            partie.ShowDialog();
+            this.Close();
+        }
+
+        private void btnCopy_Click(object sender, EventArgs e)
+        {
+            // Copier le code du salon
+            Clipboard.SetText(idRoom);
+            MessageBox.Show("Le code a été copié dans votre presse-papiers", "Succès", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
     }
 }
