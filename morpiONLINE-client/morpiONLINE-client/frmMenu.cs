@@ -90,9 +90,7 @@ namespace morpiONLINE_client
             }
 
             Lancer la nouvelle forme ici
-            */
-
-            
+            */            
 
         }
 
@@ -104,7 +102,7 @@ namespace morpiONLINE_client
             }
             else
             {
-                Visible = false;
+                Hide();
             }
         }
 
