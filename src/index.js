@@ -212,6 +212,10 @@ io.on('connection', (socket) => {
                 io.to(socket.id).emit('exception', { errorMessage: `Vous n'êtes dans aucun salon connu` });
             }
         });
+
+        socket.on('playAgain', () => {
+
+        });
     } else {
         io.to(socket.id).emit('expiredToken');
         socket.disconnect();

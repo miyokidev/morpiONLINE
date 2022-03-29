@@ -73,14 +73,25 @@ function isPlayerInARoom(socket, rooms, token) {
     return room;
 }
 
+function emitResult(io, currentRoom) {
+    switch (currentRoom.game.result) {
+        case 'P1':
+            io.to(currentRoom.id).emit('gameEnded', {p1: "win", p2: "lose"});
+            break;
+        case 'P2':
+            io.to(currentRoom.id).emit('gameEnded', {p1: "lose", p2: "win"});
+            break;
+        case 'draw':
+            io.to(currentRoom.id).emit('gameEnded', {p1: "draw", p2: "draw"});
+            break;
+    }
+}
+
 function play(io, roomPlayer, cellIndexes, rooms) {
     rooms.map(r => r.id == roomPlayer.id ? playCell(r, cellIndexes) : r);
     io.to(roomPlayer.id).emit('gridState', roomPlayer.game.grid);
     if (isGameFinished(roomPlayer.game, cellIndexes)) {
-        idPlayer1 = store.get(roomPlayer.players[0].token).id;
-        idPlayer2 = store.get(roomPlayer.players[1].token).id;
-
-        io.to(roomPlayer.id).emit('gameEnded', roomPlayer.game.result);
+        emitResult(io, roomPlayer);
     } else {
         io.to(roomPlayer.id).emit('isPlayer1Turn', roomPlayer.game.isP1Turn);
     }
@@ -201,11 +212,24 @@ function handlePlayerLeave(io, socket, rooms) {
         // Retire le joueur qui quitte la room.
         currentRoom.players = currentRoom.players.filter(e => e.token !== token);
         socket.leave(currentRoom.id);
-        // Si il n'y a plus un seul joueur dans le salon on retire l'objet room de la liste des rooms.
-        if (currentRoom.players.length == 0) {
-            rooms = rooms.filter(e => e !== currentRoom);
+        // Vérifie si le joueur est en pleine partie
+        if (currentRoom.game.inProgress) {
+            if (currentRoom.players[0].token == token) {
+                currentRoom.game.result = "P2";
+                currentRoom.game.inProgress = false;
+            } else {
+                currentRoom.game.result = "P1";
+                currentRoom.game.inProgress = false;
+            }
+
+            emitResult(io, currentRoom);
         } else {
-            emitPlayerList(io, currentRoom);
+            // Si il n'y a plus un seul joueur dans le salon on retire l'objet room de la liste des rooms.
+            if (currentRoom.players.length == 0) {
+                rooms = rooms.filter(e => e !== currentRoom);
+            } else {
+                emitPlayerList(io, currentRoom);
+            }
         }
     }
     return rooms;
