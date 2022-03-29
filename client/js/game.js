@@ -1,9 +1,10 @@
+const token = sessionStorage.getItem('token');
 const socket = io("ws://localhost:7000", {
-    auth :  {token: sessionStorage.getItem('token')}
+    query: {token}
 });
 
 addEventListener("DOMContentLoaded", () => {
-    if(sessionStorage.getItem('username') == null) {
+    if (sessionStorage.getItem('username') == null) {
         location.href = "form.html";
     }
 });
@@ -11,7 +12,9 @@ addEventListener("DOMContentLoaded", () => {
 const cells = document.querySelectorAll('td');
 for (var i = 0; i < cells.length; i++) {
     cells[i].addEventListener('click', function (e) {
-      socket.emit('play', e.target.id);
+        if (e.target.id.split(";").length == 2) {
+            socket.emit('play', e.target.id);
+        }
     });
 }
 
@@ -23,7 +26,7 @@ socket.on("playerList", list => {
         document.getElementById("idSymbolP2").innerText = list.player2;
     } else {
         document.getElementById("idSymbolP1").innerText = list.player1;
-        document.getElementById("idSymbolP2").innerText = "Vous"; 
+        document.getElementById("idSymbolP2").innerText = "Vous";
     }
 });
 
@@ -35,6 +38,28 @@ socket.on("isPlayer1Turn", isP1Turn => {
         document.getElementById("idSymbolP1").classList.add("fw-bold");
     } else {
         document.getElementById("idSymbolP2").classList.add("fw-bold");
+    }
+});
+
+socket.on('gridState', grid => {
+    let blank = "img/blanc.png";
+    let p1Symbol = "img/croix.png";
+    let p2Symbol = "img/rond.png";
+
+    for (let i = 0; i < grid.length; i++) {
+        for (let j = 0; j < grid[i].length; j++) {
+            switch (grid[i][j]) {
+                case 'P1':
+                    document.getElementById(i + ";" + j).src = p1Symbol;
+                    break;
+                case 'P2':
+                    document.getElementById(i + ";" + j).src = p2Symbol;
+                    break;
+                default:
+                    document.getElementById(i + ";" + j).src = blank;
+                    break;
+            }
+        }
     }
 });
 
@@ -51,7 +76,7 @@ socket.on("exception", event => {
 });
 
 // Quand on arrive plus à se connecter au serveur socket.io (arrêt du serveur)
-socket.on('connect_error', function() {
+socket.on('connect_error', function () {
     sessionStorage.clear();
     location.href = "index.html";
- });
+});

@@ -1,5 +1,6 @@
+const token = sessionStorage.getItem('token');
 const socket = io("ws://localhost:7000", {
-    auth :  {token: sessionStorage.getItem('token')}
+    query: {token}
 });
 
 addEventListener("DOMContentLoaded", () => {
