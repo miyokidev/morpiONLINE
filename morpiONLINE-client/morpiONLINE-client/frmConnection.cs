@@ -15,7 +15,7 @@ namespace morpiONLINE_client
 {
     public partial class frmConnection : Form
     {
-
+        // Variable globale
         const string API = "http://85.6.250.101:5555/";
         
         public frmConnection()
@@ -35,7 +35,6 @@ namespace morpiONLINE_client
 
         private void btnInscription_Click(object sender, EventArgs e)
         {
-
             // Inscription
             string user = tbxNewUser.Text;
             string password = tbxNewPassword.Text;

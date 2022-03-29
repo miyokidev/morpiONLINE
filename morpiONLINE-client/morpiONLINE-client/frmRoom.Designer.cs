@@ -37,6 +37,7 @@ namespace morpiONLINE_client
             this.lblIdRoom = new System.Windows.Forms.Label();
             this.btnCopy = new System.Windows.Forms.Button();
             this.btnLeave = new System.Windows.Forms.Button();
+            this.lblError = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // lblWaitingLaunch
@@ -125,11 +126,23 @@ namespace morpiONLINE_client
             this.btnLeave.UseVisualStyleBackColor = false;
             this.btnLeave.Click += new System.EventHandler(this.btnLeave_Click);
             // 
+            // lblError
+            // 
+            this.lblError.ForeColor = System.Drawing.Color.Red;
+            this.lblError.Location = new System.Drawing.Point(12, 397);
+            this.lblError.Name = "lblError";
+            this.lblError.Size = new System.Drawing.Size(776, 23);
+            this.lblError.TabIndex = 11;
+            this.lblError.Text = "Message d\'erreur";
+            this.lblError.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.lblError.Visible = false;
+            // 
             // frmRoom
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 450);
+            this.Controls.Add(this.lblError);
             this.Controls.Add(this.btnLeave);
             this.Controls.Add(this.btnCopy);
             this.Controls.Add(this.lblIdRoom);
@@ -156,5 +169,6 @@ namespace morpiONLINE_client
         private System.Windows.Forms.Label lblIdRoom;
         private System.Windows.Forms.Button btnCopy;
         private System.Windows.Forms.Button btnLeave;
+        private System.Windows.Forms.Label lblError;
     }
 }

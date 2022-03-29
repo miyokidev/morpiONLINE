@@ -18,7 +18,7 @@ namespace morpiONLINE_client
 {
     public partial class frmMenu : Form
     {
-
+        // Variables globales
         static SocketIO client;
         readonly User user;
 
@@ -28,7 +28,6 @@ namespace morpiONLINE_client
             user = u;
 
             // Connection avec le serveur socket IO
-
             client = new SocketIO("http://85.6.250.101:5554/", new SocketIOOptions
             {
                 Query = new List<KeyValuePair<string, string>>
@@ -47,129 +46,94 @@ namespace morpiONLINE_client
 
         private async void btnJoin_Click(object sender, EventArgs e)
         {
-            JObject room = new JObject();
-            room["id"] = tbxRoomCode.Text;
-
+            // Demande de rejoindre un salon
             await client.EmitAsync("joinRoom", new { id = tbxRoomCode.Text });
 
-            string id = "";
-            bool isFinished = false;
-            bool error = false;
-            string errorMsg = "";
-
+            // Si le serveur accèpte la demande, redirection vers le salon
             client.On("joinedRoom", response =>
             {
                 string json = response.GetValue().GetRawText();
                 var game = JsonConvert.DeserializeObject<dynamic>(json);
 
-                id = game["id"];
+                string id = game["id"];
 
-                isFinished = true;
-            });
-
-            client.On("exception", response =>
-            {
-                string json = response.GetValue().GetRawText();
-                var msg = JsonConvert.DeserializeObject<dynamic>(json);
-
-                error = true;
-                errorMsg = msg["errorMessage"];
-
-                isFinished = true;
-            });
-
-            while (!isFinished)
-            {
-                // Attente
-            }
-
-            if (error)
-            {
-                lblError.Visible = true;
-                lblError.Text = errorMsg;
-            } else
-            {
-                // Rejoindre un salon
-                this.Hide();
-                frmRoom salon = new frmRoom(user, id);
-                salon.ShowDialog();
-                this.Close();
-            }            
+                NavToRoom(id);
+            });                
         }
 
         private async void btnCreate_Click(object sender, EventArgs e)
         {
+            // Création du salon
             await client.EmitAsync("createRoom");
 
-            string id = "";
-            bool isFinished = false;
-
+            // Récupérationde du code du salon
             client.On("id", response =>
             {
                 string json = response.GetValue().GetRawText();
                 var room = JsonConvert.DeserializeObject<dynamic>(json);
 
-                id = room["id"];
-
-                isFinished = true;
-            });
-            
-            while (!isFinished)
-            {
-                // Attente
-            }
-
-            // Créer un salon
-            this.Hide(); // Utliser HideForm() ? (Ne fonctionne pas)
-            frmRoom salon = new frmRoom(user, id);
-            salon.ShowDialog();
-            this.Close(); // Utiliser CloseForm() ? (Fonctionne)         
-
+                string id = room["id"];
+                NavToRoom(id);
+            });              
         }
 
-        private void HideForm()
+        /// <summary>
+        /// Redirection vers un salon
+        /// </summary>
+        /// <param name="id">Code du salon</param>
+        private void NavToRoom(string id)
         {
             if (InvokeRequired)
             {
-                this.Invoke(new Action(() => { HideForm(); }));
+                this.Invoke(new Action(() => { NavToRoom(id); }));
             }
             else
             {
-                Hide();
+                frmRoom salon = new frmRoom(user, id);
+                this.Hide();
+                salon.ShowDialog();
+                this.Close();
             }
         }
 
-        private void CloseForm()
+        /// <summary>
+        /// Redirection vers le menu
+        /// </summary>
+        private void Disconnect()
         {
             if (InvokeRequired)
             {
-                this.Invoke(new Action(() => { CloseForm(); }));
+                this.Invoke(new Action(() => { Disconnect(); }));
             }
             else
             {
-                Close();
+                frmConnection connection = new frmConnection();
+                this.Hide();
+                connection.ShowDialog();
+                this.Close();
             }
         }
 
+        /// <summary>
+        /// Affichage du message d'erreur
+        /// </summary>
+        /// <param name="errorMsg">Message d'erreur</param>
+        private void ShowError(string errorMsg)
+        {
+            if (InvokeRequired)
+            {
+                this.Invoke(new Action(() => { ShowError(errorMsg); }));
+            }
+            else
+            {
+                lblError.Visible = true;
+                lblError.Text = errorMsg;
+            }
+        }
 
         // Socket IO - Communication avec le serveur
         private async Task SocketManager()
         {
-            Console.WriteLine("Test");
-
-            client.On("working", response =>
-            {
-                Console.WriteLine(response);
-            });
-
-
-            client.OnConnected += async (sender, e) =>
-            {
-                await client.EmitAsync("testC");
-                Console.WriteLine("Connected");
-
-            };
-
             await client.ConnectAsync();
 
             // Vérification de la validité du token
@@ -178,16 +142,21 @@ namespace morpiONLINE_client
                 Console.WriteLine("Token expiré");
 
                 // Déconnection
-                this.Hide();
-                frmConnection connection = new frmConnection();
-                connection.ShowDialog();
-                this.Close();
+                Disconnect();
+            });
 
+            // Gérer les exceptions
+            client.On("exception", response =>
+            {
+                string json = response.GetValue().GetRawText();
+                var msg = JsonConvert.DeserializeObject<dynamic>(json);
+
+                string errorMsg = msg["errorMessage"];
+
+                ShowError(errorMsg);
             });
 
             Console.ReadLine();
         }
-
-
     }
 }
