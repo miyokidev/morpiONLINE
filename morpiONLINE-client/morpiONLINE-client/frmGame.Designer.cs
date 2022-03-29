@@ -49,6 +49,8 @@ namespace morpiONLINE_client
             this.lblLignV1 = new System.Windows.Forms.Label();
             this.lblLignV2 = new System.Windows.Forms.Label();
             this.lblError = new System.Windows.Forms.Label();
+            this.lblResult1 = new System.Windows.Forms.Label();
+            this.lblResult2 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.pibBox1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pibPlayer1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pibPlayer2)).BeginInit();
@@ -272,11 +274,35 @@ namespace morpiONLINE_client
             this.lblError.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             this.lblError.Visible = false;
             // 
+            // lblResult1
+            // 
+            this.lblResult1.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblResult1.Location = new System.Drawing.Point(141, 27);
+            this.lblResult1.Name = "lblResult1";
+            this.lblResult1.Size = new System.Drawing.Size(119, 25);
+            this.lblResult1.TabIndex = 24;
+            this.lblResult1.Text = "Win";
+            this.lblResult1.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.lblResult1.Visible = false;
+            // 
+            // lblResult2
+            // 
+            this.lblResult2.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblResult2.Location = new System.Drawing.Point(539, 27);
+            this.lblResult2.Name = "lblResult2";
+            this.lblResult2.Size = new System.Drawing.Size(119, 25);
+            this.lblResult2.TabIndex = 25;
+            this.lblResult2.Text = "Lose";
+            this.lblResult2.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.lblResult2.Visible = false;
+            // 
             // frmGame
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 643);
+            this.Controls.Add(this.lblResult2);
+            this.Controls.Add(this.lblResult1);
             this.Controls.Add(this.lblError);
             this.Controls.Add(this.lblLignV2);
             this.Controls.Add(this.lblLignV1);
@@ -338,5 +364,7 @@ namespace morpiONLINE_client
         private System.Windows.Forms.Label lblLignV1;
         private System.Windows.Forms.Label lblLignV2;
         private System.Windows.Forms.Label lblError;
+        private System.Windows.Forms.Label lblResult1;
+        private System.Windows.Forms.Label lblResult2;
     }
 }

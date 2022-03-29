@@ -183,7 +183,6 @@ namespace morpiONLINE_client
         {
             if (InvokeRequired)
             {
-                Console.WriteLine("test");
                 this.Invoke(new Action(() => { ShowPlayers(player1, player2); }));
             }
 

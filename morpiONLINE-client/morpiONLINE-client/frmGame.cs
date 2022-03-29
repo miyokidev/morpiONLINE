@@ -19,11 +19,6 @@ namespace morpiONLINE_client
         readonly User user;
         string idRoom;
 
-        /*
-        enum Players { Player1, Player2};
-        Players whosTurn;
-        */
-
         Image imgPlayer1 = Properties.Resources.cross;
         Image imgPlayer2 = Properties.Resources.circle;
 
@@ -42,10 +37,6 @@ namespace morpiONLINE_client
                     new KeyValuePair<string, string>("token", user.Token),
                 }
             });
-
-            // Récupération de quel joueur est quelle forme (manuel pour le moment)
-            // whosTurn = Players.Player1;
-
         }
 
         private async void frmGame_Load(object sender, EventArgs e)
@@ -56,20 +47,6 @@ namespace morpiONLINE_client
         public async void Play(object sender, EventArgs e)
         {
             PictureBox clickedBox = sender as PictureBox;
-
-            /*
-            switch (whosTurn)
-            {
-                case Players.Player1:
-                    clickedBox.Image = imgPlayer1;                    
-                    whosTurn = Players.Player2;
-                    break;
-                case Players.Player2:
-                    clickedBox.Image = imgPlayer2;
-                    whosTurn = Players.Player1;
-                    break;
-            }
-            */
 
             await client.EmitAsync("play", clickedBox.Tag.ToString());
 
@@ -110,7 +87,7 @@ namespace morpiONLINE_client
                 ShowPlayers((string)playerList["player1"], (string)playerList["player2"]);
             });
 
-            // Récupère quel joueur doit jouer
+            // Récupère qui doit jouer
             client.On("isPlayer1Turn", response =>
             {
                 lblPlayer1.Font = new Font("Microsoft Sans Serif", 12, FontStyle.Regular);
@@ -127,6 +104,8 @@ namespace morpiONLINE_client
                 {
                     lblPlayer2.Font = new Font("Microsoft Sans Serif", 12, FontStyle.Bold);
                 }
+
+                HideError();
             });
 
             // Récupération de l'état de la partie
@@ -148,10 +127,8 @@ namespace morpiONLINE_client
                                 switch ((string)grid[i][j])
                                 {
                                     case "P1":
-                                        Console.WriteLine("avant if");
                                         if (box.Tag.ToString() == i + ";" + j)
                                         {
-                                            Console.WriteLine("après if");
                                             box.Image = imgPlayer1;
                                         }
                                         break;
@@ -175,7 +152,13 @@ namespace morpiONLINE_client
             });
 
             // Fin de partie
-            // Continuer ici
+            client.On("gameEnded", response =>
+            {
+                string json = response.GetValue().GetRawText();
+                var result = JsonConvert.DeserializeObject<dynamic>(json);
+
+                ShowResult((string)result["p1"], (string)result["p2"]);
+            });
 
             // Gérer les erreurs
             client.On("exception", response =>
@@ -221,6 +204,42 @@ namespace morpiONLINE_client
         }
 
         /// <summary>
+        /// Affichage des résultats
+        /// </summary>
+        private void ShowResult(string resultP1, string resultP2)
+        {
+            if (InvokeRequired)
+            {
+                this.Invoke(new Action(() => { ShowResult(resultP1, resultP2); }));
+            }
+            else
+            {
+                lblResult1.Visible = true;
+                lblResult2.Visible = true;
+                btnMenu.Visible = true;
+                btnReplay.Visible = true;
+
+                lblResult1.Text = resultP1;
+                lblResult2.Text = resultP2;
+            }
+        }
+
+        /// <summary>
+        /// Cache les erreurs
+        /// </summary>
+        private void HideError()
+        {
+            if (InvokeRequired)
+            {
+                this.Invoke(new Action(() => { HideError(); }));
+            }
+            else
+            {
+                lblError.Visible = false;
+            }
+        }
+
+        /// <summary>
         /// Affichage des erreurs
         /// </summary>
         /// <param name="errorMsg">Message d'erreur</param>
@@ -246,7 +265,6 @@ namespace morpiONLINE_client
         {
             if (InvokeRequired)
             {
-                Console.WriteLine("test");
                 this.Invoke(new Action(() => { ShowPlayers(player1, player2); }));
             }
 
