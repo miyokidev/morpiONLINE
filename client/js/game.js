@@ -9,6 +9,18 @@ addEventListener("DOMContentLoaded", () => {
     }
 });
 
+let btnPlayAgain = document.getElementById("idBtnPlayAgain");
+let btnHome = document.getElementById("idBtnHome");
+
+btnHome.addEventListener("click", () => {
+    socket.emit('leaveRoom');
+    location.href = "index.html";
+});
+
+btnPlayAgain.addEventListener("click", () => {
+    //socket.emit('playAgain');
+});
+
 const cells = document.querySelectorAll('td');
 for (var i = 0; i < cells.length; i++) {
     cells[i].addEventListener('click', function (e) {
@@ -65,21 +77,15 @@ socket.on('gridState', grid => {
 
 // Quand la partie se termine
 socket.on('gameEnded', result => {
-    switch (result) {
-        case 'P1':
-            document.getElementById("idResultP1").innerText = "Win";
-            document.getElementById("idResultP1").classList.add("fw-bold");
-            document.getElementById("idResultP2").innerText = "Lose";
-            break;
-        case 'P2':
-            document.getElementById("idResultP2").innerText = "Win";
-            document.getElementById("idResultP2").classList.add("fw-bold");
-            document.getElementById("idResultP1").innerText = "Lose";
-            break;
-        case 'draw':
-            document.getElementById("idResultP1").innerText = "Draw";
-            document.getElementById("idResultP2").innerText = "Draw";
-            break;
+    document.getElementById("idResultP1").innerText = result.p1;
+    document.getElementById("idResultP2").innerText = result.p2;
+
+    if (result.p1 == "win") {
+        document.getElementById("idResultP1").classList.add("fw-bold");
+    }
+
+    if (result.p2 == "win") {
+        document.getElementById("idResultP2").classList.add("fw-bold");
     }
 });
 
