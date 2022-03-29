@@ -76,15 +76,16 @@ namespace morpiONLINE_client
             clickedBox.Enabled = false;
         }
 
-        private void btnMenu_Click(object sender, EventArgs e)
+        private async void btnMenu_Click(object sender, EventArgs e)
         {
+            // Quitte le salon
+            await client.EmitAsync("leaveRoom");
+
             // Retour au menu
-            /*
             this.Hide();
-            frmMenu menu = new frmMenu();
-            menu.ShowDialog();
+            frmMenu partie = new frmMenu(user);
+            partie.ShowDialog();
             this.Close();
-            */
         }
 
         private void btnReplay_Click(object sender, EventArgs e)
