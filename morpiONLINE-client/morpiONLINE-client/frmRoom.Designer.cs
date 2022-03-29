@@ -34,6 +34,8 @@ namespace morpiONLINE_client
             this.lblPlayer1 = new System.Windows.Forms.Label();
             this.btnStart = new System.Windows.Forms.Button();
             this.label1 = new System.Windows.Forms.Label();
+            this.lblIdRoom = new System.Windows.Forms.Label();
+            this.btnCopy = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // lblWaitingLaunch
@@ -89,11 +91,32 @@ namespace morpiONLINE_client
             this.label1.Text = "Adversaire";
             this.label1.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
+            // lblIdRoom
+            // 
+            this.lblIdRoom.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblIdRoom.Location = new System.Drawing.Point(241, 88);
+            this.lblIdRoom.Name = "lblIdRoom";
+            this.lblIdRoom.Size = new System.Drawing.Size(199, 25);
+            this.lblIdRoom.TabIndex = 7;
+            this.lblIdRoom.Text = "Code du salon";
+            this.lblIdRoom.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // btnCopy
+            // 
+            this.btnCopy.Location = new System.Drawing.Point(423, 87);
+            this.btnCopy.Name = "btnCopy";
+            this.btnCopy.Size = new System.Drawing.Size(84, 30);
+            this.btnCopy.TabIndex = 8;
+            this.btnCopy.Text = "Copier code";
+            this.btnCopy.UseVisualStyleBackColor = true;
+            // 
             // frmRoom
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 450);
+            this.Controls.Add(this.btnCopy);
+            this.Controls.Add(this.lblIdRoom);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.btnStart);
             this.Controls.Add(this.lblPlayer1);
@@ -114,5 +137,7 @@ namespace morpiONLINE_client
         private System.Windows.Forms.Label lblPlayer1;
         private System.Windows.Forms.Button btnStart;
         private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Label lblIdRoom;
+        private System.Windows.Forms.Button btnCopy;
     }
 }

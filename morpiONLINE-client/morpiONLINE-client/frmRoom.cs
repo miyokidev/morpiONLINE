@@ -16,9 +16,19 @@ namespace morpiONLINE_client
 {
     public partial class frmRoom : Form
     {
-        public frmRoom()
+        static SocketIO client;
+        readonly User user;
+        string idRoom;
+
+        public frmRoom(User u, string id)
         {
             InitializeComponent();
+            user = u;
+            idRoom = id;
+
+            Console.WriteLine("Code du salon : " + id);
+
+            lblIdRoom.Text = idRoom;
         }
 
         private void btnStart_Click(object sender, EventArgs e)
@@ -33,16 +43,9 @@ namespace morpiONLINE_client
         // Socket IO - Communication avec le serveur
         private static async Task SocketManager()
         {
-            var client = new SocketIO("http://10.5.47.43:7000/");
+            var client = new SocketIO("http://85.6.250.101:5554/");
 
             Console.WriteLine("Test");
-
-            client.On("working", response =>
-            {
-                // You can print the returned data first to decide what to do next.
-                // output: ["hi client"]
-                Console.WriteLine(response);
-            });
 
             client.OnConnected += async (sender, e) =>
             {

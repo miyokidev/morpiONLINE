@@ -20,7 +20,7 @@ namespace morpiONLINE_client
     {
 
         static SocketIO client;
-        User user;
+        readonly User user;
 
         public frmMenu(User u)
         {
@@ -29,13 +29,13 @@ namespace morpiONLINE_client
 
             // Connection avec le serveur socket IO
 
-            var options = new SocketIOOptions();
-            options.Auth = new List<KeyValuePair<string, string>>() {
-                new KeyValuePair<string, string>("token", user.Token),
-            };
-
-
-            client = new SocketIO("http://10.5.47.32:7000/", options);
+            client = new SocketIO("http://85.6.250.101:5554/", new SocketIOOptions
+            {
+                Query = new List<KeyValuePair<string, string>>
+                {
+                    new KeyValuePair<string, string>("token", user.Token),
+                }
+            });
 
             Console.WriteLine(user.Token);
         }
@@ -47,7 +47,6 @@ namespace morpiONLINE_client
 
         private async void btnJoin_Click(object sender, EventArgs e)
         {
-
             JObject o = new JObject();
             o["id"] = tbxRoomCode.Text;
 
@@ -66,22 +65,64 @@ namespace morpiONLINE_client
         {
             await client.EmitAsync("createRoom");
 
+            string id = "";
+
             client.On("id", response =>
             {
-                Console.WriteLine(response);
+                string json = response.GetValue().GetRawText();
+                var room = JsonConvert.DeserializeObject<dynamic>(json);
+
+                id = room["id"];
+
+                // Console.WriteLine(id);
+
+                this.Hide(); // Utliser HideForm() ? (Ne fonctionne pas)
+                frmRoom salon = new frmRoom(user, id);
+                salon.ShowDialog();
+                this.Close(); // Utiliser CloseForm() ? (Fonctionne)
             });
 
-            /*
             // Créer un salon
-            this.Hide();
-            frmRoom salon = new frmRoom();
-            salon.ShowDialog();
-            this.Close();
+            /* Cette strat pue sent le caca mais fonctionne
+            while (id == "")
+            {
+                Console.WriteLine("caca");
+            }
+
+            Lancer la nouvelle forme ici
             */
+
+            
+
         }
 
+        private void HideForm()
+        {
+            if (InvokeRequired)
+            {
+                this.Invoke(new Action(() => { HideForm(); }));
+            }
+            else
+            {
+                Visible = false;
+            }
+        }
+
+        private void CloseForm()
+        {
+            if (InvokeRequired)
+            {
+                this.Invoke(new Action(() => { CloseForm(); }));
+            }
+            else
+            {
+                Close();
+            }
+        }
+
+
         // Socket IO - Communication avec le serveur
-        private static async Task SocketManager()
+        private async Task SocketManager()
         {
             Console.WriteLine("Test");
 
@@ -101,19 +142,18 @@ namespace morpiONLINE_client
             await client.ConnectAsync();
 
             // Vérification de la validité du token
-            client.On("expiredToken", response => {
+            client.On("expiredToken", response =>
+            {
                 Console.WriteLine("Token expiré");
 
-                /*
                 // Déconnection
                 this.Hide();
                 frmConnection connection = new frmConnection();
                 connection.ShowDialog();
                 this.Close();
-                */
 
             });
-            
+
             Console.ReadLine();
         }
 

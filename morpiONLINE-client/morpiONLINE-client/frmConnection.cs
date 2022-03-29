@@ -15,10 +15,8 @@ namespace morpiONLINE_client
 {
     public partial class frmConnection : Form
     {
-        // Serveur de Brian http://10.5.47.37:6969/
-        // Serveur de Leo http://10.5.47.32:6969/
 
-        const string API = "http://10.5.47.32:6969/";
+        const string API = "http://85.6.250.101:5555/";
         
         public frmConnection()
         {
