@@ -58,9 +58,8 @@ function generateRandomId() {
 
 // Return null if no
 // Return the room if yes
-function isPlayerInARoom(socket, rooms) {
+function isPlayerInARoom(socket, rooms, token) {
     var room = null;
-    var token = socket.handshake.auth.token;
 
     for (let i = 0; i < rooms.length; i++) {
         let currentRoom = rooms[i];
@@ -74,9 +73,26 @@ function isPlayerInARoom(socket, rooms) {
     return room;
 }
 
+function play(io, roomPlayer, cellIndexes, rooms) {
+    rooms.map(r => r.id == roomPlayer.id ? playCell(r, cellIndexes) : r);
+    io.to(roomPlayer.id).emit('gridState', roomPlayer.game.grid);
+    io.to(roomPlayer.id).emit('isPlayer1Turn', roomPlayer.game.isP1Turn);
+
+    return rooms;
+}
+
+function playCell(room, cellIndexes) {
+    let cell = room.game.grid[cellIndexes[0]][cellIndexes[1]];
+    cell == null ? cell = (room.game.isP1Turn ? 'P1': 'P2') : cell;
+    room.game.grid[cellIndexes[0]][cellIndexes[1]] = cell;
+    room.game.isP1Turn = !room.game.isP1Turn;
+
+    return room;
+}
+
 function handlePlayerLeave(io, socket, rooms) {
-    var token = socket.handshake.auth.token;
-    var currentRoom = isPlayerInARoom(socket, rooms);
+    var token = socket.handshake.query.token;
+    var currentRoom = isPlayerInARoom(socket, rooms, token);
     if (currentRoom != null) {
         // Retire le joueur qui quitte la room.
         currentRoom.players = currentRoom.players.filter(e => e.token !== token);
@@ -107,4 +123,4 @@ function emitPlayerList(io, currentRoom) {
     }
 }
 
-module.exports = { checkPassword, checkUsername, generateRandomId, handlePlayerLeave, emitPlayerList, isPlayerInARoom };
+module.exports = { checkPassword, checkUsername, generateRandomId, handlePlayerLeave, emitPlayerList, isPlayerInARoom, play };
