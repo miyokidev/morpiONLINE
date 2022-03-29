@@ -86,7 +86,6 @@ io.on('connection', (socket) => {
         socket.on('createRoom', () => {
             // Si le joueur est déjà dans une room on le fait quitter
             if (isPlayerInARoom(socket, rooms, token) != null) {
-                console.log("leaving");
                 rooms = handlePlayerLeave(io, socket, rooms);
             }
 
@@ -107,6 +106,7 @@ io.on('connection', (socket) => {
                         [null, null, null]
                     ],
                     isP1Turn: true, // premier tour pour le joueur 1 par défaut
+                    result: null, // result null de base, "p1" si le joueur 1 gagne, "p2" si joueur 2 gagne, "tied" si égalité
                 }
             };
 
@@ -145,10 +145,10 @@ io.on('connection', (socket) => {
                 }
 
                 if (!findRoom) {
-                    io.to(socket.id).emit('exception', { errorMessage: `Aucun salon n'a été trouvé avec le code renseigné1` });
+                    io.to(socket.id).emit('exception', { errorMessage: `Aucun salon n'a été trouvé avec le code renseigné` });
                 }
             } else {
-                io.to(socket.id).emit('exception', { errorMessage: `Aucun salon n'a été trouvé avec le code renseigné1` });
+                io.to(socket.id).emit('exception', { errorMessage: `Aucun salon n'a été trouvé avec le code renseigné` });
             }
         });
 

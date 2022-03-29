@@ -76,18 +76,122 @@ function isPlayerInARoom(socket, rooms, token) {
 function play(io, roomPlayer, cellIndexes, rooms) {
     rooms.map(r => r.id == roomPlayer.id ? playCell(r, cellIndexes) : r);
     io.to(roomPlayer.id).emit('gridState', roomPlayer.game.grid);
-    io.to(roomPlayer.id).emit('isPlayer1Turn', roomPlayer.game.isP1Turn);
+    if (isGameFinished(roomPlayer.game, cellIndexes)) {
+        idPlayer1 = store.get(roomPlayer.players[0].token).id;
+        idPlayer2 = store.get(roomPlayer.players[1].token).id;
+
+        io.to(roomPlayer.id).emit('gameEnded', roomPlayer.game.result);
+    } else {
+        io.to(roomPlayer.id).emit('isPlayer1Turn', roomPlayer.game.isP1Turn);
+    }
 
     return rooms;
 }
 
 function playCell(room, cellIndexes) {
-    let cell = room.game.grid[cellIndexes[0]][cellIndexes[1]];
-    cell == null ? cell = (room.game.isP1Turn ? 'P1': 'P2') : cell;
-    room.game.grid[cellIndexes[0]][cellIndexes[1]] = cell;
-    room.game.isP1Turn = !room.game.isP1Turn;
+    if (room.game.inProgress) {
+        let cell = room.game.grid[cellIndexes[0]][cellIndexes[1]];
+        cell == null ? cell = (room.game.isP1Turn ? 'P1' : 'P2') : cell;
+        room.game.grid[cellIndexes[0]][cellIndexes[1]] = cell;
+        room.game.isP1Turn = !room.game.isP1Turn;
+    }
 
     return room;
+}
+
+function isGameFinished(game, cellIndexes) {
+    if (!game.grid.some(row => row.includes(null))) {
+        game.inProgress = false;
+        game.result = "tied";
+        return true;
+    }
+
+    if (WhoWins(game.grid, cellIndexes[0], cellIndexes[1]) != null) {
+        game.inProgress = false;
+        game.result = WhoWins(game.grid, cellIndexes[0], cellIndexes[1]);
+        return true;
+    }
+
+    return false;
+}
+
+function WhoWins(grid, row, col) {
+    rowPlayer = checkRow(grid, row);
+    colPlayer = checkCol(grid, col);
+    diagPlayer = checkDiagonals(grid);
+
+    if (rowPlayer != null) {
+        return rowPlayer;
+    }
+
+    if (colPlayer != null) {
+        return colPlayer;
+    }
+
+    if (diagPlayer != null) {
+        return diagPlayer;
+    }
+
+    return null;
+}
+
+function checkRow(grid, row) {
+    var allSame = true;
+    playerCell = grid[row][0];
+
+    for (let col = 0; col < 3; col++) {
+        if (grid[row][col] != playerCell) {
+            allSame = false;
+        }
+    }
+
+    if (allSame) {
+        return playerCell;
+    }
+
+    return null;
+}
+
+function checkCol(grid, col) {
+    var allSame = true;
+    playerCell = grid[0][col];
+
+    for (let row = 0; row < 3; row++) {
+        if (grid[row][col] != playerCell) {
+            allSame = false;
+        }
+    }
+
+    if (allSame) {
+        return playerCell;
+    }
+
+    return null;
+}
+
+function checkDiagonals(grid) {
+    var allSameFirstDiag = true;
+    var allSameSecondDiag = true;
+    var playerFirstDiag = grid[0][0];
+    var playerSecondDiag = grid[2][0];
+
+    for (let i = 0; i < 3; i++) {
+        if (grid[i][i] != playerFirstDiag) {
+            allSameFirstDiag = false;
+        }
+
+        if (grid[2-i][i] != playerSecondDiag) {
+            allSameSecondDiag = false;
+        }
+    }
+
+    if (allSameFirstDiag) {
+        return playerFirstDiag;
+    }
+
+    if (allSameSecondDiag) {
+        return playerSecondDiag;
+    }
 }
 
 function handlePlayerLeave(io, socket, rooms) {
