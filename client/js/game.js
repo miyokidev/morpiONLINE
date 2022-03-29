@@ -22,22 +22,22 @@ socket.on("playerList", list => {
     let myName = sessionStorage.getItem('username');
 
     if (list.player1 == myName) {
-        document.getElementById("idSymbolP1").innerText = "Vous";
-        document.getElementById("idSymbolP2").innerText = list.player2;
+        document.getElementById("idUsernameP1").innerText = "Vous";
+        document.getElementById("idUsernameP2").innerText = list.player2;
     } else {
-        document.getElementById("idSymbolP1").innerText = list.player1;
-        document.getElementById("idSymbolP2").innerText = "Vous";
+        document.getElementById("idUsernameP1").innerText = list.player1;
+        document.getElementById("idUsernameP2").innerText = "Vous";
     }
 });
 
 socket.on("isPlayer1Turn", isP1Turn => {
-    document.getElementById("idSymbolP1").classList.remove("fw-bold");
-    document.getElementById("idSymbolP2").classList.remove("fw-bold");
+    document.getElementById("idUsernameP1").classList.remove("fw-bold");
+    document.getElementById("idUsernameP2").classList.remove("fw-bold");
 
     if (isP1Turn) {
-        document.getElementById("idSymbolP1").classList.add("fw-bold");
+        document.getElementById("idUsernameP1").classList.add("fw-bold");
     } else {
-        document.getElementById("idSymbolP2").classList.add("fw-bold");
+        document.getElementById("idUsernameP2").classList.add("fw-bold");
     }
 });
 
@@ -60,6 +60,26 @@ socket.on('gridState', grid => {
                     break;
             }
         }
+    }
+});
+
+// Quand la partie se termine
+socket.on('gameEnded', result => {
+    switch (result) {
+        case 'P1':
+            document.getElementById("idResultP1").innerText = "Win";
+            document.getElementById("idResultP1").classList.add("fw-bold");
+            document.getElementById("idResultP2").innerText = "Lose";
+            break;
+        case 'P2':
+            document.getElementById("idResultP2").innerText = "Win";
+            document.getElementById("idResultP2").classList.add("fw-bold");
+            document.getElementById("idResultP1").innerText = "Lose";
+            break;
+        case 'draw':
+            document.getElementById("idResultP1").innerText = "Draw";
+            document.getElementById("idResultP2").innerText = "Draw";
+            break;
     }
 });
 
