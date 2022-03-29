@@ -102,6 +102,7 @@ namespace morpiONLINE_client
             this.Name = "frmRoom";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "morpiONLINE";
+            this.Load += new System.EventHandler(this.frmRoom_Load);
             this.ResumeLayout(false);
 
         }

@@ -125,7 +125,7 @@
             this.ClientSize = new System.Drawing.Size(884, 561);
             this.Controls.Add(this.grbHome);
             this.Name = "frmMenu";
-            this.StartPosition = System.Windows.Forms.FormStartPosition.Manual;
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "morpiONLINE";
             this.Load += new System.EventHandler(this.frmMenu_Load);
             this.grbHome.ResumeLayout(false);

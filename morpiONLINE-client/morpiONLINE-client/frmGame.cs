@@ -47,10 +47,12 @@ namespace morpiONLINE_client
         private void btnMenu_Click(object sender, EventArgs e)
         {
             // Retour au menu
+            /*
             this.Hide();
             frmMenu menu = new frmMenu();
             menu.ShowDialog();
             this.Close();
+            */
         }
 
         private void btnReplay_Click(object sender, EventArgs e)

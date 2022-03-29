@@ -18,14 +18,26 @@ namespace morpiONLINE_client
 {
     public partial class frmMenu : Form
     {
-        // Serveur de Brian http://10.5.47.37:6969/
-        // Serveur de Leo http://10.5.47.32:6969/
 
+        static SocketIO client;
+        User user;
 
-        const string server = "http://10.5.47.43:7000/";
-        public frmMenu()
+        public frmMenu(User u)
         {
-            InitializeComponent();           
+            InitializeComponent();
+            user = u;
+
+            // Connection avec le serveur socket IO
+
+            var options = new SocketIOOptions();
+            options.Auth = new List<KeyValuePair<string, string>>() {
+                new KeyValuePair<string, string>("token", user.Token),
+            };
+
+
+            client = new SocketIO("http://10.5.47.32:7000/", options);
+
+            Console.WriteLine(user.Token);
         }
 
         private async void frmMenu_Load(object sender, EventArgs e)
@@ -33,53 +45,78 @@ namespace morpiONLINE_client
             await SocketManager();
         }
 
-        private void btnJoin_Click(object sender, EventArgs e)
+        private async void btnJoin_Click(object sender, EventArgs e)
         {
+
+            JObject o = new JObject();
+            o["id"] = tbxRoomCode.Text;
+
+            await client.EmitAsync("joinRoom", o);
+
+            /*
             // Rejoindre un salon
             this.Hide();
             frmRoom salon = new frmRoom();
             salon.ShowDialog();
             this.Close();
+            */
         }
 
-        private void btnCreate_Click(object sender, EventArgs e)
+        private async void btnCreate_Click(object sender, EventArgs e)
         {
+            await client.EmitAsync("createRoom");
+
+            client.On("id", response =>
+            {
+                Console.WriteLine(response);
+            });
+
+            /*
             // Créer un salon
             this.Hide();
             frmRoom salon = new frmRoom();
             salon.ShowDialog();
             this.Close();
+            */
         }
 
         // Socket IO - Communication avec le serveur
         private static async Task SocketManager()
         {
-            var client = new SocketIO("http://10.5.47.43:7000/");
-
             Console.WriteLine("Test");
 
-            client.On("hi", response =>
+            client.On("working", response =>
             {
-                // You can print the returned data first to decide what to do next.
-                // output: ["hi client"]
                 Console.WriteLine(response);
-
-                string text = response.GetValue<string>();
-
-                // The socket.io server code looks like this:
-                // socket.emit('hi', 'hi client');
             });
+
 
             client.OnConnected += async (sender, e) =>
             {
-                // Emit a string
                 await client.EmitAsync("testC");
                 Console.WriteLine("Connected");
 
             };
+
             await client.ConnectAsync();
 
+            // Vérification de la validité du token
+            client.On("expiredToken", response => {
+                Console.WriteLine("Token expiré");
+
+                /*
+                // Déconnection
+                this.Hide();
+                frmConnection connection = new frmConnection();
+                connection.ShowDialog();
+                this.Close();
+                */
+
+            });
+            
             Console.ReadLine();
         }
+
+
     }
 }

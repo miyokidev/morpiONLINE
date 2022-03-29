@@ -18,8 +18,8 @@ namespace morpiONLINE_client
         // Serveur de Brian http://10.5.47.37:6969/
         // Serveur de Leo http://10.5.47.32:6969/
 
-        const string API = "http://10.5.47.43:6969/";
-
+        const string API = "http://10.5.47.32:6969/";
+        
         public frmConnection()
         {
             InitializeComponent();
@@ -72,6 +72,7 @@ namespace morpiONLINE_client
         /// <param name="httpWebRequest"></param>
         public void Send(string user, string password, string param)
         {
+            string token = "";
             lblSuccess.Visible = false;
             lblError.Visible = false;
             try
@@ -95,15 +96,21 @@ namespace morpiONLINE_client
                 {
                     var result = streamReader.ReadToEnd();
                     Console.WriteLine(result);
+
+                    dynamic obj = JsonConvert.DeserializeObject(result);
+
+                    token = obj.token;
                 }
 
                 // Si aucune erreur n'a été rencontrée
                 switch (param)
                 {
                     case "signin":
+                        User usr = new User(user, token);
+
                         // Redirection vers le menu principal
                         this.Hide();
-                        frmMenu menu = new frmMenu();
+                        frmMenu menu = new frmMenu(usr);
                         menu.ShowDialog();
                         this.Close();
                         break;
